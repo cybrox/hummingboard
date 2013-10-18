@@ -116,7 +116,7 @@
 				$userAnime = $this->readAllAnime($user);
 			
 				$animeWatchd = [];
-				$animeTypeof = ["TV" => 0, "OVA" => 0, "Movie" => 0, "Special" => 0];
+				$animeTypeof = ["TV" => 0, "Movie" => 0, "Special" => 0, "OVA" => 0, "ONA" => 0];
 				
 				$animeAmount = [
 					"currently-watching" => ["anime" => 0, "episodes" => 0],
@@ -153,6 +153,9 @@
 					array_push($animeWatchd, [$a["last_watched"], $a["anime"]["title"], $a["anime"]["cover_image"]]);
 					
 				}
+				
+				// no music atm
+				unset($animeTypeof["music"]);
 				
 				$userStatistics = [$animeTypeof, $animeAmount, $animeRating, $animeWatchd];
 				

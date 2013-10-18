@@ -4,3 +4,6 @@ ProjectSettings
 # System related stuff #
 ehthumbs.db
 Thumbs.db
+
+# Cachefiles #
+src/cache/*.json
