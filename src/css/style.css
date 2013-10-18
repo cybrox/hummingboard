@@ -1,0 +1,170 @@
+/**
+ * Hummingboard
+ * Simple but elegant Hummingbird stats page
+ *
+ * Written and copyrighted 2013+
+ * by Sven Marc 'CybroX' Gehring
+ *
+ * Licensed under CC BY-SA 3.0
+ * For additional informations, please read the
+ * LICENSE.md file or the license deed at the
+ * Creative Commons website.
+ */
+
+@font-face {font-family: 'Ubuntu-Regular'; src: url('../font/ubuntu-regular-webfont.woff') format('woff'); font-weight: normal; font-style: normal;}
+@font-face {font-family: 'Ubuntu-Medium'; src: url('../font/ubuntu-medium-webfont.woff') format('woff'); font-weight: normal; font-style: normal;}
+@font-face {font-family: 'Ubuntu-Bold'; src: url('../font/ubuntu-bold-webfont.woff') format('woff'); font-weight: normal; font-style: normal;}
+
+* {
+	font-family: Ubuntu-Regular;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: url('../img/background.png') left top repeat #bbb;
+}
+
+#headContainer, #statsContainer {
+	position: absolute;
+	left: 0;
+}
+
+#headContainer {
+	width: 100%;
+	height: 10%;
+	top: 0;
+	z-index: 50;
+	box-shadow: 0px 2px 5px #666;
+	-moz-box-shadow: 0px 2px 5px #666;
+	-webkit-box-shadow: 0px 2px 5px #666;
+	background: url('../img/headbackgorund.png') left top repeat #999;
+}
+
+#headline {
+	width: 100%;
+}
+
+#username {
+	display: inline-block;
+	width: 30%;
+	margin: 0;
+	padding: 15px 0 20px 20px;
+	font-family: Ubuntu-Bold, Arial;
+	font-size: 3em;
+	color: #BBBBBB;
+	text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+	-moz-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+	-webkit-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+}
+
+#detailsContainer {
+	display: inline-block;
+	text-align: right;
+	width: 60%;
+	padding: 15px 5% 0 0;
+	font-size: 2em;
+}
+
+#detailsContainer span:not(.divid) {
+	font-family: Ubuntu-Medium, Arial;
+	text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+	-moz-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+	-webkit-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+}
+
+.divid {color: #DDDDDD;}
+.descr {color: #BBBBBB;}
+.anime {color: #FF8247;}
+.episd {color: #436EEE;}
+
+#statsContainer {
+	width: 100%;
+	height: 90%;
+	top: 10%;
+	z-index: 20;
+}
+
+#statsUpper, #statsLower {
+	width: 100%;
+	height: 50%;
+}
+
+#statsUpper {
+	box-shadow: 0px 1px 0 #666;
+	-moz-box-shadow: 0px 1px 0 #666;
+	-webkit-box-shadow: 0px 1px 0 #666;
+}
+
+#statsState, #statsRates, #statsTypes {
+	float: left;
+	width: 30%;
+	height: 100%;
+}
+
+.title {
+	height: 20%;
+	margin-top: 1px; //<-- 'cause used box shadow
+}
+
+.title > h2 {
+	color: #666;
+	text-align:center;
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+
+.graph {
+	width: 80%;
+	height: 80%;
+	margin: 0 10%;
+}
+
+.bar {
+	height: 1px;
+	background: blue;
+	float: left;
+	transform: height 1s ease-in-out;
+	-moz-transform: height 1s ease-in-out;
+	-webkit-transform: height 1s ease-in-out;
+}
+
+.barO {
+	background: #ff8247;
+	background: -moz-linear-gradient(top,  #ff8247 0%, #f47044 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff8247), color-stop(100%,#f47044));
+	background: -webkit-linear-gradient(top,  #ff8247 0%,#f47044 100%);
+	background: -o-linear-gradient(top,  #ff8247 0%,#f47044 100%);
+	background: -ms-linear-gradient(top,  #ff8247 0%,#f47044 100%);
+	background: linear-gradient(to bottom,  #ff8247 0%,#f47044 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff8247', endColorstr='#f47044',GradientType=0 );
+}
+
+.barB {
+	background: rgb(67,110,238);
+	background: -moz-linear-gradient(top,  rgba(67,110,238,1) 0%, rgba(55,68,186,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(67,110,238,1)), color-stop(100%,rgba(55,68,186,1)));
+	background: -webkit-linear-gradient(top,  rgba(67,110,238,1) 0%,rgba(55,68,186,1) 100%);
+	background: -o-linear-gradient(top,  rgba(67,110,238,1) 0%,rgba(55,68,186,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(67,110,238,1) 0%,rgba(55,68,186,1) 100%);
+	background: linear-gradient(to bottom,  rgba(67,110,238,1) 0%,rgba(55,68,186,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#436eee', endColorstr='#3744ba',GradientType=0 );
+}
+
+.bar span {
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 10px;
+	margin: -20px 0 0 0;
+}
+
+.bar4  {width: 20%; margin: 0 2.5%;}
+.bar5  {width: 15%; margin: 0 2.5%}
+.bar10 {width: 8%; margin: 0 2%}
+.bar11 {width: 7%; margin: 0 1%}
+.barD1 {margin-right: 0px;}
+.barD2 {margin-left: 0px;}
+
+
+.break {clear: both;}
