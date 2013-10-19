@@ -5,7 +5,7 @@
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
 	
-	$hummingbuser = (!empty($requestUrl[2])) ? $requestUrl[2] : "CybroX";
+	$hummingbuser = (!empty($requestUrl[1])) ? $requestUrl[1] : "CybroX";
 	$hummingboard = new Hummingboard($hummingbuser);
 	
 	$userStatistics = $hummingboard->generateStatistics();
@@ -70,11 +70,13 @@
 	<script type="text/javascript" src="src/js/core.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			resizeStatsContainer();
 			generateStats(<?php echo json_encode($userStatistics); ?>);
 		});
 		
 		/* Listener to prevent resizing bug (temp) */
 		$(window).resize(function(){
+			resizeStatsContainer();
 			generateStats(<?php echo json_encode($userStatistics); ?>);
 		});
 	</script>

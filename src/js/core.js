@@ -120,3 +120,14 @@ function appendGraph(target, dataArray){
 		isdouble: false
 	});
 }
+
+
+/**
+ * Resite the stats container
+ *
+ * This function will resize the stats container
+ * every time the window is resized.
+ */
+function resizeStatsContainer(){
+	$('statsContainer').css("height", ($('body').height() - 100)+"px");
+}
