@@ -115,23 +115,23 @@
 			
 				$userAnime = $this->readAllAnime($user);
 			
-				$animeWatchd = [];
-				$animeTypeof = ["TV" => 0, "Movie" => 0, "Special" => 0, "OVA" => 0, "ONA" => 0];
+				$animeWatchd = array();
+				$animeTypeof = array("TV" => 0, "Movie" => 0, "Special" => 0, "OVA" => 0, "ONA" => 0);
 				
-				$animeAmount = [
-					"currently-watching" => ["anime" => 0, "episodes" => 0],
-					"plan-to-watch" =>      ["anime" => 0, "episodes" => 0],
-					"completed" =>          ["anime" => 0, "episodes" => 0],
-					"on-hold" =>            ["anime" => 0, "episodes" => 0],
-					"dropped" =>            ["anime" => 0, "episodes" => 0],
-					"total" =>              ["anime" => 0, "episodes" => 0]
-				];
+				$animeAmount = array(
+					"currently-watching" => array("anime" => 0, "episodes" => 0),
+					"plan-to-watch" =>      array("anime" => 0, "episodes" => 0),
+					"completed" =>          array("anime" => 0, "episodes" => 0),
+					"on-hold" =>            array("anime" => 0, "episodes" => 0),
+					"dropped" =>            array("anime" => 0, "episodes" => 0),
+					"total" =>              array("anime" => 0, "episodes" => 0)
+				);
 				
-				$animeRating = [
-					"unrated" => 0,
+				$animeRating = array(
+					"-" => 0,   "0.0" => 0,
 					"0.5" => 0, "1.0" => 0, "1.5" => 0, "2.0" => 0, "2.5" => 0,
 					"3.0" => 0, "3.5" => 0, "4.0" => 0, "4.5" => 0, "5.0" => 0,
-				];
+				);
 				
 				
 				foreach($userAnime as $a){
@@ -145,24 +145,32 @@
 					$animeTypeof[$a["anime"]["show_type"]]++;
 					
 					if($a["rating"]["value"] == ""){
-						$animeRating["unrated"]++;
+						$animeRating["-"]++;
 					} else {
 						$animeRating[$a["rating"]["value"]]++;
 					}
 					
-					array_push($animeWatchd, [$a["last_watched"], $a["anime"]["title"], $a["anime"]["cover_image"]]);
+					array_push($animeWatchd, array($a["last_watched"], $a["anime"]["title"], $a["anime"]["cover_image"]));
 					
 				}
 				
 				// no music atm
 				unset($animeTypeof["music"]);
 				
-				$userStatistics = [$animeTypeof, $animeAmount, $animeRating, $animeWatchd];
+				$userStatistics = array($animeTypeof, $animeAmount, $animeRating, $animeWatchd);
 				
 				$this->cacheData($userStatistics);
 			}
 			
 			return $userStatistics;
+		}
+		
+		
+		/**
+		 * Create cache file string
+		 */
+		private function cacheString(){
+			return "./src/cache/".strtolower($this->user).".json";
 		}
 		
 		
@@ -174,7 +182,7 @@
 		 */
 		protected function cacheData($cacheData){
 		
-			$cacheFile = "./src/cache/".$this->user.".json";
+			$cacheFile = $this->cacheString();
 			$cacheJson = json_encode($cacheData);
 			
 			file_put_contents ($cacheFile, $cacheJson);
@@ -191,7 +199,7 @@
 		protected function checkCache(){
 			
 			$cacheTime = 86400;
-			$cacheFile = "./src/cache/".$this->user.".json";
+			$cacheFile = $this->cacheString();
 			
 			if(!file_exists($cacheFile)) return false;
 			
@@ -211,7 +219,7 @@
 		 */
 		protected function getCache(){
 		
-			$cacheFile = "./src/cache/".$this->user.".json";
+			$cacheFile = $this->cacheString();
 			$cacheData = file_get_contents($cacheFile);
 			$cacheJson = json_decode($cacheData, true);
 			

@@ -47,9 +47,9 @@ body {
 
 #username {
 	display: inline-block;
-	width: 30%;
+	width: 50%;
 	margin: 0;
-	padding: 15px 0 20px 20px;
+	padding: 5px 0 20px 20px;
 	font-family: Ubuntu-Bold, Arial;
 	font-size: 3em;
 	color: #BBBBBB;
@@ -60,9 +60,10 @@ body {
 
 #detailsContainer {
 	display: inline-block;
+	float: right;
 	text-align: right;
-	width: 60%;
-	padding: 15px 5% 0 0;
+	width: 45%;
+	padding: 15px 3% 0 0;
 	font-size: 2em;
 }
 
@@ -121,6 +122,7 @@ body {
 }
 
 .bar {
+	position: relative;
 	height: 1px;
 	background: blue;
 	float: left;
@@ -151,18 +153,35 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#436eee', endColorstr='#3744ba',GradientType=0 );
 }
 
-.bar span {
-	display: block;
+.bar:hover {
+	position: relative;
+	z-index: 90;
+	cursor: pointer;
+	box-shadow: 1px -1px 1px #666;
+	-moz-box-shadow: 1px -1px 1px #666;
+	-webkit-box-shadow: 1px -1px 1px #666;
+	transition: box-shadow: 1s ease-in-out;
+	-moz-transition: box-shadow: 1s ease-out;
+	-webkit-transition: box-shadow: 1s ease-out;
+}
+
+.bar span.desc,  .bar span.val{
+	position: absolute;
+	display: inline-block;
 	width: 100%;
 	text-align: center;
-	font-size: 10px;
-	margin: -20px 0 0 0;
+	font-size: 12px;
 }
+
+.dbdesc {width: 200% !important;}
+
+.bar span.desc {bottom: -17px;}
+.bar span.val  {bottom: 2px; font-size: 10px;}
 
 .bar4  {width: 20%; margin: 0 2.5%;}
 .bar5  {width: 15%; margin: 0 2.5%}
 .bar10 {width: 8%; margin: 0 2%}
-.bar11 {width: 7%; margin: 0 1%}
+.bar12 {width: 6%; margin: 0 1%}
 .barD1 {margin-right: 0px;}
 .barD2 {margin-left: 0px;}
 

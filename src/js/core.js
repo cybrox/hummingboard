@@ -17,6 +17,10 @@ var boxHeight = 0;
  
 /**
  * Generate statistics
+ *
+ * This is the main function of the
+ * generation process, it will call
+ * all needed subfunctions.
  */
 function generateStats(dataArray){
 	
@@ -31,71 +35,87 @@ function generateStats(dataArray){
 
 /**
  * Generate anime types stats
+ *
+ * Generate bars for the anime types
+ * TV, Movie, Special, OVA, ONA
  */
 function generateStatsTypes(stats){
 	
+	/* Calculate total possible points */
 	totalValue = 0;
+	$.each(stats, function(key, value){totalValue += value;});
 	
-	$.each(stats, function(key, value){
-		totalValue += value;
-	});
-	
+	/* Progress data and append bars to DOM */
 	$.each(stats, function(key, value){
 		var barHeight = (value/totalValue)*boxHeight;
 		var barOffset = boxHeight - ((value/totalValue)*boxHeight);
 		
-		$('#graphTypes').append('<div class="bar barO bar5" style="height: '+barHeight+'px; margin-top: '+barOffset+'px"><span>'+key+'</span></div>');
+		var displayValue = (value > 0) ? value : "";
+		
+		$('#graphTypes').append('<div class="bar barO bar5" style="height: '+barHeight+'px; margin-top: '+barOffset+'px"><span class="desc">'+key+'</span><span class="val">'+displayValue+'</span></div>');
 	});
 }
 
 
 /**
  * Generate anime state stats
+ *
+ * Generate the stats for watching, planned
+ * and so on, this involves two bars per
+ * element, one for the anime and one for the
+ * episodes.
  */
 function generateStatsState(stats){
 	
+	/* read total anime/episodes and delete help value */
+	totalValueAnime = stats.total["anime"];
+	totalValueEpisd = stats.total["episodes"];
 	delete stats.total;
 	
-	totalValueAnime = 0;
-	totalValueEpisd = 0;
-	
-	$.each(stats, function(key, value){
-		totalValueAnime += value["anime"];
-		totalValueEpisd += value["episodes"];
-	});
-	
-	console.log(stats);
-	console.log(totalValueAnime);
-	console.log(totalValueEpisd);
-	
+	/* Progress data and append bars to DOM */
 	$.each(stats, function(key, value){
 		var barHeightAnime = (value["anime"]/totalValueAnime)*boxHeight;
 		var barOffsetAnime = boxHeight - ((value["anime"]/totalValueAnime)*boxHeight);
 		var barHeightEpisd = (value["episodes"]/totalValueEpisd)*boxHeight;
 		var barOffsetEpisd = boxHeight - ((value["episodes"]/totalValueEpisd)*boxHeight);
 		
-		$('#graphState').append('<div class="bar barO barD1 bar10" style="height: '+barHeightAnime+'px; margin-top: '+barOffsetAnime+'px"><span>'+key+'</span></div>');
-		$('#graphState').append('<div class="bar barB barD2 bar10" style="height: '+barHeightEpisd+'px; margin-top: '+barOffsetEpisd+'px"></div>');
+		var displayValueAnime = (value["anime"] > 0) ? value["anime"] : "";
+		var displayValueEpisd = (value["episodes"] > 0) ? value["episodes"] : "";
+		
+		/* Rename listpoints */
+		switch(key){
+			case "currently-watching": state = "watching"; break;
+			case "plan-to-watch":      state = "planned";  break;
+			case "on-hold":            state = "onhold";   break;
+			default:                   state = key;        break;
+		}
+		
+		$('#graphState').append('<div class="bar barO barD1 bar10" style="height: '+barHeightAnime+'px; margin-top: '+barOffsetAnime+'px"><span class="desc dbdesc">'+state+'</span><span class="val">'+displayValueAnime+'</span></div>');
+		$('#graphState').append('<div class="bar barB barD2 bar10" style="height: '+barHeightEpisd+'px; margin-top: '+barOffsetEpisd+'px"><span class="val">'+displayValueEpisd+'</span></div>');
 	});
 }
 
 
 /**
  * Generate anime rating stats
+ *
+ * Generates the stats for the anime ratings
+ * from 0.0 - 5.0 plus "-" (unrated)
  */
 function generateStatsRates(stats){
 	
+	/* Calculate total possible points */
 	totalValue = 0;
+	$.each(stats, function(key, value){totalValue += value;});
 	
-	$.each(stats, function(key, value){
-		totalValue += value;
-	});
-	
+	/* Progress data and append bars to DOM */
 	$.each(stats, function(key, value){
 		var barHeight = (value/totalValue)*boxHeight;
 		var barOffset = boxHeight - ((value/totalValue)*boxHeight);
 		
-		$('#graphRates').append('<div class="bar barO bar11" style="height: '+barHeight+'px; margin-top: '+barOffset+'px"><span>'+key+'</span></div>');
+		var displayValue = (value > 0) ? value : "";
+		
+		$('#graphRates').append('<div class="bar barO bar12" style="height: '+barHeight+'px; margin-top: '+barOffset+'px"><span class="desc">'+key+'</span><span class="val">'+displayValue+'</span></div>');
 	});
 	
 }
