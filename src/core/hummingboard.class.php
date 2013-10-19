@@ -64,6 +64,31 @@
 		
 		
 		/**
+		 * Get the user data
+		 *
+		 * This function will request the user informations
+		 * from the hummingbird API in order to display the
+		 * user's avatar and nickname on the site.
+		 * Thanks to TheBetterRed for telling me.
+		 */
+		public function readUserData($user = ""){
+		
+			if(empty($user)) $user = $this->user;
+			
+			$userData = $this->requestData("users/".$user);
+			
+			$effectiveUserData = array(
+				"username" => $userData["name"],
+				"useravat" => $userData["avatar"],
+				"userdata" => $userData["life_spent_on_anime"]
+			);
+			
+			return $effectiveUserData;
+			
+		}
+		
+		
+		/**
 		 * Send multiple requests to get all anime
 		 *
 		 * The hummingbird API doesn't support the
@@ -128,9 +153,12 @@
 				);
 				
 				$animeRating = array(
-					"-" => 0,   "0.0" => 0,
-					"0.5" => 0, "1.0" => 0, "1.5" => 0, "2.0" => 0, "2.5" => 0,
-					"3.0" => 0, "3.5" => 0, "4.0" => 0, "4.5" => 0, "5.0" => 0,
+					"-" =>   array("anime" => 0, "episodes" => 0), "0.0" => array("anime" => 0, "episodes" => 0),
+					"0.5" => array("anime" => 0, "episodes" => 0), "1.0" => array("anime" => 0, "episodes" => 0),
+					"1.5" => array("anime" => 0, "episodes" => 0), "2.0" => array("anime" => 0, "episodes" => 0),
+					"2.5" => array("anime" => 0, "episodes" => 0), "3.0" => array("anime" => 0, "episodes" => 0),
+					"3.5" => array("anime" => 0, "episodes" => 0), "4.0" => array("anime" => 0, "episodes" => 0),
+					"4.5" => array("anime" => 0, "episodes" => 0), "5.0" => array("anime" => 0, "episodes" => 0)
 				);
 				
 				
@@ -145,20 +173,30 @@
 					$animeTypeof[$a["anime"]["show_type"]]++;
 					
 					if($a["rating"]["value"] == ""){
-						$animeRating["-"]++;
+						$animeRating["-"]["anime"]++;
+						$animeRating["-"]["episodes"] += $a["episodes_watched"];
 					} else {
-						$animeRating[$a["rating"]["value"]]++;
+						$animeRating[$a["rating"]["value"]]["anime"]++;
+						$animeRating[$a["rating"]["value"]]["episodes"] += $a["episodes_watched"];
 					}
 					
 					array_push($animeWatchd, array($a["last_watched"], $a["anime"]["title"], $a["anime"]["cover_image"]));
 					
 				}
 				
-				// no music & unnamed atm
+				// Filter unprogressed data
 				unset($animeTypeof["music"]);
 				unset($animeTypeof[""]);
 				
-				$userStatistics = array($animeTypeof, $animeAmount, $animeRating, $animeWatchd);
+				$userData = $this->readUserData($user);
+				
+				$userStatistics = array(
+					"_userdata" => $userData,
+					"animetype" => $animeTypeof,
+					"animeamnt" => $animeAmount,
+					"animertng" => $animeRating,
+					"animelist" => $animeWatchd
+				);
 				
 				$this->cacheData($userStatistics);
 			}
@@ -228,6 +266,27 @@
 		
 		}
 		
+		
+		/**
+		 * Generate anime time string
+		 *
+		 * This function will generate the -spent on anime-
+		 * string out of the given numbers of seconds.
+		 */
+		public function generateAnimeTime($totalTime){
+			
+			$years   = floor($totalTime / 525948.766);
+			$left    = $totalTime % 525948.766;
+			$months  = floor($left / 43829.766);
+			$left    = $left % 43829.0639;
+			$days    = floor($left / 1440);
+			$left    = $left % 1440;
+			$hours   = floor($left / 60);
+			$minutes = $left % 60;
+			
+			return $years." Years, ".$months." Months, ".$days." Days, ".$hours." Hours, ".$minutes." Minutes";
+			
+		}
 	}
 	
 ?>

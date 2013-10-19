@@ -26,9 +26,9 @@ function generateStats(dataArray){
 	$('#graphRates').css({"width": "80%","height": "80%"});
 	$('#graphTypes').css({"width": "80%","height": "80%"});
 
-	generateStatsTypes(dataArray[0]);
-	generateStatsState(dataArray[1]);
-	generateStatsRates(dataArray[2]);
+	generateStatsTypes(dataArray["animetype"]);
+	generateStatsState(dataArray["animeamnt"]);
+	generateStatsRates(dataArray["animertng"]);
 }
 
 
@@ -43,7 +43,7 @@ function generateStatsTypes(stats){
 	/* Generate stats array */
 	var dataArray = [];
 	$.each(stats, function(key, value){
-		dataArray.push([value, key, '#FF8247']);
+		dataArray.push([value, key, 'orangeBar']);
 	});
 	
 	appendGraph("graphTypes", dataArray);
@@ -73,21 +73,13 @@ function generateStatsState(stats){
 			default:                   keyname = key;        break;
 		}
 	
-		dataArray.push([[value["anime"], value["episodes"]], keyname]);
+		dataArray.push([[value["anime"], value["episodes"]], keyname, ['orangeBar', 'blueBar']]);
 	});
 	
 	$('#graphState').html("");
-	
-	var exampleContainer = $('#graphState');
-	graphSizeX = exampleContainer.width();
-	graphSizeY = exampleContainer.height();
-	
-	$('#graphState').jqBarGraph({
+	$('#graphState').graph({
 		data: dataArray,
-		colors: ['#FF8247','#436EEE'],
-		type: 'multi',
-		height: graphSizeY,
-		width: graphSizeX
+		isdouble: true
 	});
 }
 
@@ -99,14 +91,17 @@ function generateStatsState(stats){
  * from 0.0 - 5.0 plus "-" (unrated)
  */
 function generateStatsRates(stats){
-	
-	/* Generate stats array */
 	var dataArray = [];
+	
 	$.each(stats, function(key, value){
-		dataArray.push([value, key, '#FF8247']);
+		dataArray.push([[value["anime"], value["episodes"]], key, ['orangeBar', 'blueBar']]);
 	});
 	
-	appendGraph("graphRates", dataArray);
+	$('#graphRates').html("");
+	$('#graphRates').graph({
+		data: dataArray,
+		isdouble: true
+	});
 }
 
 
@@ -120,11 +115,8 @@ function appendGraph(target, dataArray){
 	graphSizeX = exampleContainer.width();
 	graphSizeY = exampleContainer.height();
 	
-	$('#'+target).jqbargraph({
+	$('#'+target).graph({
 		data: dataArray,
-		height: graphSizeY,
-		width: graphSizeX,
-		showValues: true,
-		showValuesColor: '#fff'
+		isdouble: false
 	});
 }

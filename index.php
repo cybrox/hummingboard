@@ -29,17 +29,21 @@
 	
 	<link href="<?php echo DIRURL; ?>src/css/style.css" rel="stylesheet" />
 	
-	<title><?php echo $hummingboard->user; ?> ~ Hummingboard</title>
+	<title><?php echo $userStatistics["_userdata"]["username"]; ?> ~ Hummingboard</title>
 </head>
 <body>
 
 	<div id="headContainer">
 		<div id="headline">
-			<h1 id="username"><?php echo $hummingboard->user; ?></h1>
+			<div id="username">
+				<img id="useravatar" src="<?php echo $userStatistics["_userdata"]["useravat"]; ?>" alt=""/>
+				<span id="userfont"><?php echo $userStatistics["_userdata"]["username"]; ?></span>
+			</div>
 			<div id="detailsContainer">
-				<span class="descr">Anime </span><span class="anime"><?php echo $userStatistics[1]["total"]["anime"]; ?></span>
+				<span class="descr">Anime </span><span class="anime"><?php echo $userStatistics["animeamnt"]["total"]["anime"]; ?></span>
 				<span class="divid"> | </span>
-				<span class="episd"><?php echo $userStatistics[1]["total"]["episodes"]; ?></span><span class="descr"> Episodes</span>
+				<span class="episd"><?php echo $userStatistics["animeamnt"]["total"]["episodes"]; ?></span><span class="descr"> Episodes</span><br />
+				<span id="anitime"><?php echo $hummingboard->generateAnimeTime($userStatistics["_userdata"]["userdata"]); ?></span>
 			</div>
 		</div>
 	</div>
@@ -66,7 +70,7 @@
 	</div>
 
 	<script type="text/javascript" src="src/js/jquery.min.js"></script>
-	<script type="text/javascript" src="src/js/jqBarGraph.js"></script>
+	<script type="text/javascript" src="src/js/graph.js"></script>
 	<script type="text/javascript" src="src/js/core.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
