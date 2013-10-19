@@ -52,10 +52,10 @@ body {
 	padding: 5px 0 20px 20px;
 	font-family: Ubuntu-Bold, Arial;
 	font-size: 3em;
-	color: #BBBBBB;
-	text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
-	-moz-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
-	-webkit-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+	color: hsla(0, 0%, 73%, .75);
+	text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
+	-moz-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
+	-webkit-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
 }
 
 #detailsContainer {
