@@ -49,6 +49,9 @@ body {
 #headline {
 	width: 100%;
 	height: 100%;
+	
+	background-color: white;
+	border-bottom: 1px solid #D1D1D1;
 }
 
 #username {
@@ -62,9 +65,11 @@ body {
 #useravatar {
 	display: inline-block;
 	height: 100%;
-	box-shadow: 0px 0 5px #444;
+/*	box-shadow: 0px 0 5px #444;
 	-moz-box-shadow: 0px 0 5px #444;
 	-webkit-box-shadow: 0px 0 5px #444;
+*/
+	margin-left: 3%;
 }
 
 #userfont {
@@ -73,10 +78,12 @@ body {
 	padding: 10px 0 0 20px;
 	font-family: Ubuntu-Bold, Arial;
 	font-size: 3em;
-	color: hsla(0, 0%, 73%, .75);
+/*	color: hsla(0, 0%, 73%, .75);
 	text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
 	-moz-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
 	-webkit-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
+*/
+	color: #333;
 }
 
 #detailsContainer {
@@ -110,6 +117,7 @@ body {
 	height: 90%;
 	top: 100px;
 	z-index: 20;
+	background-color: #eee;
 }
 
 #statsUpper, #statsLower {
