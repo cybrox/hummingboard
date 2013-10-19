@@ -10,13 +10,8 @@
  * LICENSE.md file or the license deed at the
  * Creative Commons website.
  */
-
  
-var size = {
-	'graphSizeX': 0,
-	'graphSizeY':  0
-}
-
+ 
  
 /**
  * Generate statistics
@@ -27,9 +22,9 @@ var size = {
  */
 function generateStats(dataArray){
 	
-	var exampleContainer = $('#graphState');
-	size.graphSizeX = exampleContainer.width();
-	size.graphSizeY = exampleContainer.height();
+	$('#graphState').css({"width": "80%","height": "80%"});
+	$('#graphRates').css({"width": "80%","height": "80%"});
+	$('#graphTypes').css({"width": "80%","height": "80%"});
 
 	generateStatsTypes(dataArray[0]);
 	generateStatsState(dataArray[1]);
@@ -66,6 +61,8 @@ function generateStatsTypes(stats){
 function generateStatsState(stats){
 	var dataArray = [];
 	
+	delete stats.total;
+	
 	$.each(stats, function(key, value){
 		
 		/* Rename listpoints */
@@ -78,15 +75,19 @@ function generateStatsState(stats){
 	
 		dataArray.push([[value["anime"], value["episodes"]], keyname]);
 	});
-
-	console.log(dataArray);
+	
+	$('#graphState').html("");
+	
+	var exampleContainer = $('#graphState');
+	graphSizeX = exampleContainer.width();
+	graphSizeY = exampleContainer.height();
 	
 	$('#graphState').jqBarGraph({
 		data: dataArray,
 		colors: ['#FF8247','#436EEE'],
 		type: 'multi',
-		height: size.graphSizeY,
-		width: size.graphSizeX
+		height: graphSizeY,
+		width: graphSizeX
 	});
 }
 
@@ -113,9 +114,17 @@ function generateStatsRates(stats){
  * Append graph to target
  */
 function appendGraph(target, dataArray){
+	$('#'+target).html("");
+	
+	var exampleContainer = $('#'+target);
+	graphSizeX = exampleContainer.width();
+	graphSizeY = exampleContainer.height();
+	
 	$('#'+target).jqbargraph({
 		data: dataArray,
-		height: size.graphSizeY,
-		width: size.graphSizeX
+		height: graphSizeY,
+		width: graphSizeX,
+		showValues: true,
+		showValuesColor: '#fff'
 	});
 }

@@ -66,10 +66,15 @@
 	</div>
 
 	<script type="text/javascript" src="src/js/jquery.min.js"></script>
-	<script type="text/javascript" src="src/js/jqBarGraph.min.js"></script>
+	<script type="text/javascript" src="src/js/jqBarGraph.js"></script>
 	<script type="text/javascript" src="src/js/core.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			generateStats(<?php echo json_encode($userStatistics); ?>);
+		});
+		
+		/* Listener to prevent resizing bug (temp) */
+		$(window).resize(function(){
 			generateStats(<?php echo json_encode($userStatistics); ?>);
 		});
 	</script>
