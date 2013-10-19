@@ -47,14 +47,14 @@ body {
 
 #headline {
 	width: 100%;
+	height: 100%;
 }
 
 #username {
 	display: inline-block;
-	width: 50%;
+	width: 100%;
+	height: 100%;
 	margin: 0;
-	padding: 5px 0 20px 20px;
-	font-family: Ubuntu-Bold, Arial;
 	font-size: 3em;
 	color: hsla(0, 0%, 73%, .75);
 	text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
@@ -62,13 +62,20 @@ body {
 	-webkit-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
 }
 
+#usernameFont {
+	display: inline-block;
+	font-family: Ubuntu-Bold, Arial;
+	padding: 10px 0 0 1%;
+}
+
 #detailsContainer {
 	display: inline-block;
 	float: right;
 	text-align: right;
 	width: 45%;
-	padding: 15px 3% 0 0;
-	font-size: 2em;
+	margin: 0;
+	padding: 10px 3% 0 0;
+	font-size: 0.5em;
 }
 
 #detailsContainer span:not(.divid) {

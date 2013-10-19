@@ -2,14 +2,14 @@
 
 	define("APIURL", "https://hummingbirdv1.p.mashape.com/");
 	define("APIKEY", "of9ccwJwkmYDZMeK0dbFjOHac4c9JCBX");
-	define("DIRURL", "http://hummingboard.me/");
-//	define("DIRURL", "http://localhost/Hummingboard/");
+//	define("DIRURL", "http://hummingboard.me/");
+	define("DIRURL", "http://localhost/Hummingboard/");
 	
 	require_once('./src/core/hummingboard.class.php');
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
 	
-	$hummingbuser = (!empty($requestUrl[1])) ? $requestUrl[1] : "CybroX";
+	$hummingbuser = (!empty($requestUrl[2])) ? $requestUrl[2] : "CybroX";
 	$hummingboard = new Hummingboard($hummingbuser);
 	
 	$userStatistics = $hummingboard->generateStatistics();
@@ -35,12 +35,14 @@
 
 	<div id="headContainer">
 		<div id="headline">
-			<h1 id="username"><?php echo $hummingboard->user; ?></h1>
-			<div id="detailsContainer">
-				<span class="descr">Anime </span><span class="anime"><?php echo $userStatistics[1]["total"]["anime"]; ?></span>
-				<span class="divid"> | </span>
-				<span class="episd"><?php echo $userStatistics[1]["total"]["episodes"]; ?></span><span class="descr"> Episodes</span>
-			</div>
+			<h1 id="username">
+				<span id="usernameFont"><?php echo $hummingboard->user; ?></span>
+				<p id="detailsContainer">
+					<span class="descr">Anime </span><span class="anime"><?php echo $userStatistics[1]["total"]["anime"]; ?></span>
+					<span class="divid"> | </span>
+					<span class="episd"><?php echo $userStatistics[1]["total"]["episodes"]; ?></span><span class="descr"> Episodes</span>
+				</p>
+			</h1>
 		</div>
 	</div>
 
