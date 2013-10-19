@@ -5,7 +5,7 @@
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
 	
-	$hummingbuser = (!empty($requestUrl[1])) ? $requestUrl[1] : "CybroX";
+	$hummingbuser = (!empty($requestUrl[2])) ? $requestUrl[2] : "CybroX";
 	$hummingboard = new Hummingboard($hummingbuser);
 	
 	$userStatistics = $hummingboard->generateStatistics();
