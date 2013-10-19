@@ -154,8 +154,9 @@
 					
 				}
 				
-				// no music atm
+				// no music & unnamed atm
 				unset($animeTypeof["music"]);
+				unset($animeTypeof[""]);
 				
 				$userStatistics = array($animeTypeof, $animeAmount, $animeRating, $animeWatchd);
 				

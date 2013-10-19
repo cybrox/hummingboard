@@ -66,9 +66,12 @@
 	</div>
 
 	<script type="text/javascript" src="src/js/jquery.min.js"></script>
+	<script type="text/javascript" src="src/js/jqBarGraph.min.js"></script>
 	<script type="text/javascript" src="src/js/core.js"></script>
 	<script type="text/javascript">
-		generateStats(<?php echo json_encode($userStatistics); ?>);
+		$(document).ready(function(){
+			generateStats(<?php echo json_encode($userStatistics); ?>);
+		});
 	</script>
 	
 </body>

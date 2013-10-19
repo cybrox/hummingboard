@@ -12,7 +12,10 @@
  */
 
  
-var boxHeight = 0;
+var size = {
+	'graphSizeX': 0,
+	'graphSizeY':  0
+}
 
  
 /**
@@ -25,7 +28,8 @@ var boxHeight = 0;
 function generateStats(dataArray){
 	
 	var exampleContainer = $('#graphState');
-	boxHeight = exampleContainer.height();
+	size.graphSizeX = exampleContainer.width();
+	size.graphSizeY = exampleContainer.height();
 
 	generateStatsTypes(dataArray[0]);
 	generateStatsState(dataArray[1]);
@@ -41,19 +45,13 @@ function generateStats(dataArray){
  */
 function generateStatsTypes(stats){
 	
-	/* Calculate total possible points */
-	totalValue = 0;
-	$.each(stats, function(key, value){totalValue += value;});
-	
-	/* Progress data and append bars to DOM */
+	/* Generate stats array */
+	var dataArray = [];
 	$.each(stats, function(key, value){
-		var barHeight = (value/totalValue)*boxHeight;
-		var barOffset = boxHeight - ((value/totalValue)*boxHeight);
-		
-		var displayValue = (value > 0) ? value : "";
-		
-		$('#graphTypes').append('<div class="bar barO bar5" style="height: '+barHeight+'px; margin-top: '+barOffset+'px"><span class="desc">'+key+'</span><span class="val">'+displayValue+'</span></div>');
+		dataArray.push([value, key, '#FF8247']);
 	});
+	
+	appendGraph("graphTypes", dataArray);
 }
 
 
@@ -66,32 +64,29 @@ function generateStatsTypes(stats){
  * episodes.
  */
 function generateStatsState(stats){
+	var dataArray = [];
 	
-	/* read total anime/episodes and delete help value */
-	totalValueAnime = stats.total["anime"];
-	totalValueEpisd = stats.total["episodes"];
-	delete stats.total;
-	
-	/* Progress data and append bars to DOM */
 	$.each(stats, function(key, value){
-		var barHeightAnime = (value["anime"]/totalValueAnime)*boxHeight;
-		var barOffsetAnime = boxHeight - ((value["anime"]/totalValueAnime)*boxHeight);
-		var barHeightEpisd = (value["episodes"]/totalValueEpisd)*boxHeight;
-		var barOffsetEpisd = boxHeight - ((value["episodes"]/totalValueEpisd)*boxHeight);
-		
-		var displayValueAnime = (value["anime"] > 0) ? value["anime"] : "";
-		var displayValueEpisd = (value["episodes"] > 0) ? value["episodes"] : "";
 		
 		/* Rename listpoints */
 		switch(key){
-			case "currently-watching": state = "watching"; break;
-			case "plan-to-watch":      state = "planned";  break;
-			case "on-hold":            state = "onhold";   break;
-			default:                   state = key;        break;
+			case "currently-watching": keyname = "watching"; break;
+			case "plan-to-watch":      keyname = "planned";  break;
+			case "on-hold":            keyname = "onhold";   break;
+			default:                   keyname = key;        break;
 		}
-		
-		$('#graphState').append('<div class="bar barO barD1 bar10" style="height: '+barHeightAnime+'px; margin-top: '+barOffsetAnime+'px"><span class="desc dbdesc">'+state+'</span><span class="val">'+displayValueAnime+'</span></div>');
-		$('#graphState').append('<div class="bar barB barD2 bar10" style="height: '+barHeightEpisd+'px; margin-top: '+barOffsetEpisd+'px"><span class="val">'+displayValueEpisd+'</span></div>');
+	
+		dataArray.push([[value["anime"], value["episodes"]], keyname]);
+	});
+
+	console.log(dataArray);
+	
+	$('#graphState').jqBarGraph({
+		data: dataArray,
+		colors: ['#FF8247','#436EEE'],
+		type: 'multi',
+		height: size.graphSizeY,
+		width: size.graphSizeX
 	});
 }
 
@@ -104,18 +99,23 @@ function generateStatsState(stats){
  */
 function generateStatsRates(stats){
 	
-	/* Calculate total possible points */
-	totalValue = 0;
-	$.each(stats, function(key, value){totalValue += value;});
-	
-	/* Progress data and append bars to DOM */
+	/* Generate stats array */
+	var dataArray = [];
 	$.each(stats, function(key, value){
-		var barHeight = (value/totalValue)*boxHeight;
-		var barOffset = boxHeight - ((value/totalValue)*boxHeight);
-		
-		var displayValue = (value > 0) ? value : "";
-		
-		$('#graphRates').append('<div class="bar barO bar12" style="height: '+barHeight+'px; margin-top: '+barOffset+'px"><span class="desc">'+key+'</span><span class="val">'+displayValue+'</span></div>');
+		dataArray.push([value, key, '#FF8247']);
 	});
 	
+	appendGraph("graphRates", dataArray);
+}
+
+
+/**
+ * Append graph to target
+ */
+function appendGraph(target, dataArray){
+	$('#'+target).jqbargraph({
+		data: dataArray,
+		height: size.graphSizeY,
+		width: size.graphSizeX
+	});
 }
