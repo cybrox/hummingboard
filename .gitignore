@@ -7,3 +7,6 @@ Thumbs.db
 
 # Cachefiles #
 src/cache/*.json
+
+#Config#
+src/config.php

@@ -1,11 +1,7 @@
 <?php
-
-	define("APIURL", "https://hummingbirdv1.p.mashape.com/");
-	define("APIKEY", "of9ccwJwkmYDZMeK0dbFjOHac4c9JCBX");
-	define("DIRURL", "http://hummingboard.me/");
-//	define("DIRURL", "http://localhost/Hummingboard/");
 	
 	require_once('./src/core/hummingboard.class.php');
+	require_once('./src/config.php');
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
 	
