@@ -69,15 +69,15 @@ body {
 
 #detailsContainer span:not(.divid) {
 	font-family: Ubuntu-Medium, Arial;
-	text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
-	-moz-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
-	-webkit-text-shadow: -1px -1px 0px #A9A9A9, 1px 1px 0px #fff;
+	text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
+	-moz-text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
+	-webkit-text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
 }
 
 .divid {color: #DDDDDD;}
 .descr {color: #BBBBBB;}
-.anime {color: #FF8247;}
-.episd {color: #436EEE;}
+.anime {color: hsla(19, 100%, 64%, .7);}
+.episd {color: hsla(225, 83%, 60%, .5);}
 
 #statsContainer {
 	width: 100%;
