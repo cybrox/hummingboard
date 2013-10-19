@@ -2,12 +2,14 @@
 
 	define("APIURL", "https://hummingbirdv1.p.mashape.com/");
 	define("APIKEY", "of9ccwJwkmYDZMeK0dbFjOHac4c9JCBX");
-//	define("DIRURL", "http://hummingboard.me/");
-	define("DIRURL", "http://localhost/Hummingboard/");
+	define("DIRURL", "http://hummingboard.me/");
+//	define("DIRURL", "http://localhost/Hummingboard/");
 	
 	require_once('./src/core/hummingboard.class.php');
 	
-	$hummingbuser = (!empty($_GET['user'])) ? $_GET['user'] : "CybroX";
+	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
+	
+	$hummingbuser = (!empty($requestUrl[1])) ? $requestUrl[1] : "CybroX";
 	$hummingboard = new Hummingboard($hummingbuser);
 	
 	$userStatistics = $hummingboard->generateStatistics();
