@@ -76,8 +76,11 @@ body {
 	-webkit-box-shadow: inset 1px 1px 1px #999;
 }
 
-#landingSubmit:hover, #landingInput:focus {
-	color: #436EEE;
+#landingSubmit:hover{
+	color: #666;
+}
+#landingInput:focus {
+	color: #C85C1A;
 }
 
 #landingInput, #landingInput:focus, #landingSubmit, #landingSubmit:hover {
