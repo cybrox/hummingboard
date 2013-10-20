@@ -102,6 +102,21 @@ body {
 	cursor: pointer;
 }
 
+#copyright {
+	display: inline-block;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	color: #888;
+	text-align: center;
+	opacity: 0.5;
+}
+
+#copyright a { color: #C85C1A }
+
+#copyright:hover { opacity: 1; }
+
 #headContainer, #statsContainer {
 	min-width: 1200px; /* no mobile opt atm */
 }
@@ -148,7 +163,7 @@ body {
 
 #useravatar:hover {opacity: 1;}
 
-#useravatar, #useravatar:hover{
+#useravatar, #useravatar:hover, #copyright, #copyright:hover{
 	transition: opacity 0.4s ease-in-out;
 	-moz-transition: opacity 0.4s ease-in-out;
 	-webkit-transition: opacity 0.4s ease-in-out;

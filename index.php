@@ -4,7 +4,7 @@
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
 		
-	$nameUrlP = 2;
+	$nameUrlP = 1;
 	$userName = (empty($requestUrl[$nameUrlP])) ? "" : $requestUrl[$nameUrlP];
 
 ?>
@@ -57,6 +57,7 @@
 					<input id="landingInput" type="text" name="landingInput" placeholder="Enter a hummingbird name to generate stats."/>
 					<button id="landingSubmit" onClick="submitLandingPage();">Generate Stats</button>
 				</div>
+				<span id="copyright">written with &#9825; by <a href="http://cybrox.eu">cybrox</a></span>
 			</div>
 		</div>
 		
