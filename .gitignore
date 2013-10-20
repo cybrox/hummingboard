@@ -9,4 +9,4 @@ Thumbs.db
 src/cache/*.json
 
 #Config#
-src/config.php
+src/core/config.php
