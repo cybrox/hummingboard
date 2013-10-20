@@ -218,7 +218,11 @@ body {
 	padding: 0;
 }
 
-#landingPage { display: none; }
+#landingPage {
+	display: none;
+	position: fixed;
+	top: 0;
+}
 
 #statsContainer {
 	position: absolute;
