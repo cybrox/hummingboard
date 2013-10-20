@@ -82,7 +82,7 @@ function updateInterface(dataArray){
 	var hummingLink = "http://hummingbird.me/users/"+dataArray.name+"/";
 
 	$('#useravatar').attr("src", dataArray.avatar);
-	$('#headpart').attr("href", hummingLink);
+	$('#userimage').attr("href", hummingLink);
 	$('#userfont').attr("href", hummingLink);
 	$('#userfont').text(dataArray.hbname);
 	$('#anmc').text(dataArray.animeallocation.total.anime);
