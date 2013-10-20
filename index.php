@@ -51,6 +51,7 @@
 	
 		<div id="landingPage">
 			<div id="landingInfo">
+				<div id="landingInfoLogo"></div>"
 				<h1 id="landingTitle">Hummingboard</h1>
 				<h4 id="landingSubline">Generating simple Hummingboard.me stats.</h4>
 				<div id="landingForm">
