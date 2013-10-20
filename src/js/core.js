@@ -31,11 +31,11 @@ function loadUserStats(username){
 		url: './src/api/index.php?user='+username,
 		success: function(jsonData){
 		
-			if(jsonData.state !== 4){
+			if(jsonData.state != 4){
 				embedLandingPage("User '"+username+"' not found, please try again with a different name.");
 				return false;
 			}
-		
+			
 			window.history.pushState({}, username+" ~ Hummingboard", "/"+username);
 			dataArray = jsonData.data;
 			
@@ -48,9 +48,7 @@ function loadUserStats(username){
 			generateStatsRates(dataArray.animeratings);
 		},
 		error: function(xhr, status, error) {
-			console.log(xhr);
-			console.log(status);
-			console.log(error);
+			console.log("Unknown error sneaked in, please report me this.");
 		}
 	});
 }
@@ -65,7 +63,7 @@ function loadUserStats(username){
  */
 function embedLandingPage(inputValue){
 
-	if(inputValue !== "") $('#landingInput').val(inputValue);
+	if(inputValue !== "") $('#landingInput').attr("placeholder", inputValue);
 	
 	$('#loader').hide();
 	$('#statsPage').hide();
