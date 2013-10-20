@@ -29,7 +29,7 @@
 	<div id="headContainer">
 		<div id="headline">
 			<div class="headpart">
-				<!-- <a id="back" href="#" onClick="embedLandingPage()"></a> -->
+				<!-- <a id="back" href="#" onClick="embedLandingPage('')"></a> -->
 				<a href="#" id="userimage">
 					<img id="useravatar" src="" alt=""/>
 				</a>
@@ -105,7 +105,7 @@
 		
 			<?php
 			
-				echo (!empty($userName)) ? 'loadUserStats("'.strtolower($userName).'");': 'embedLandingPage();';
+				echo (!empty($userName)) ? 'loadUserStats("'.strtolower($userName).'");': 'embedLandingPage("");';
 			?>
 		});
 	</script>

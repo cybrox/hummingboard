@@ -31,6 +31,11 @@ function loadUserStats(username){
 		url: './src/api/index.php?user='+username,
 		success: function(jsonData){
 		
+			if(jsonData.state !== 4){
+				embedLandingPage("User '"+username+"' not found, please try again with a different name.");
+				return false;
+			}
+		
 			window.history.pushState({}, username+" ~ Hummingboard", "/"+username);
 			dataArray = jsonData.data;
 			
@@ -58,11 +63,13 @@ function loadUserStats(username){
  * page if the user call the site without
  * any defined user name.
  */
-function embedLandingPage(){
+function embedLandingPage(inputValue){
 
+	if(inputValue !== "") $('#landingInput').val(inputValue);
+	
+	$('#loader').hide();
 	$('#statsPage').hide();
 	$('#landingPage').fadeIn('fast');
-
 }
 
 
@@ -89,12 +96,10 @@ function updateInterface(dataArray){
 	$('#epsc').text(dataArray.animeallocation.total.episodes);
 	$('#anitime').text(generateAnimeTime(dataArray.animetime));
 	
-	$('#useravatar').load(function(){
-		$('#headContainer').css("margin-top", "0px");
-		$('#graphState').css({"width": "80%","height": "80%"});
-		$('#graphRates').css({"width": "80%","height": "80%"});
-		$('#graphTypes').css({"width": "80%","height": "80%"});
-	});
+	$('#headContainer').css("margin-top", "0px");
+	$('#graphState').css({"width": "80%","height": "80%"});
+	$('#graphRates').css({"width": "80%","height": "80%"});
+	$('#graphTypes').css({"width": "80%","height": "80%"});
 }
 
 
