@@ -35,6 +35,17 @@ body {
 	height: 300px;
 	margin-top: -150px;
 }
+#landingInfoLogo{
+	position: relative;
+	left: 54px;
+	width: 252px;
+	height: 269px;
+	background-image: url('http://hummingbird.me/assets/h-logo-c7c8f92788a309274f62d0dc073b1066.png');
+	background-repeat: no-repeat;
+	margin: auto;
+	margin-top: -135px; !important
+
+}
 
 #landingTitle {
 	margin: 0;
