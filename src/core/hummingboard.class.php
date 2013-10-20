@@ -256,7 +256,7 @@
 			
 			if($userData->num_rows === 1){
 				$userInfo = $userData->fetch_assoc();
-				return ((time() - 86400) > $userInfo['lastupdated']) ? false : true;
+				return ((time() - 259200) > $userInfo['lastupdated']) ? false : true;
 			}
 			
 			return false;
