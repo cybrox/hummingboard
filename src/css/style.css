@@ -161,7 +161,7 @@ body {
 	color: #999;
 }
 
-#userfont:hover {color: #333;}
+#userfont:hover {color: #ff8247;}
 #userfont:hover, #userfont {
 	transition: color 0.3s ease-in-out;
 	-moz-transition: color 0.3s ease-in-out;
