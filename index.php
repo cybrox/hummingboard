@@ -4,7 +4,7 @@
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
 		
-	$nameUrlP = 2;
+	$nameUrlP = 1;
 	$userName = (empty($requestUrl[$nameUrlP])) ? "CybroX" : $requestUrl[$nameUrlP];
 
 ?>

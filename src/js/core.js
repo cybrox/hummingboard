@@ -21,14 +21,12 @@
  * all needed subfunctions.
  */
 function loadUserStats(username){
-	
+
 	$.ajax({
 		type: 'GET',
 		dataType: 'json',
-		url: './src/api/?user='+username,
+		url: './src/api/index.php?user='+username,
 		success: function(jsonData){
-			
-			console.log(jsonData);
 		
 			dataArray = jsonData.data;
 		
@@ -42,8 +40,10 @@ function loadUserStats(username){
 			generateStatsState(dataArray.animeallocation);
 			generateStatsRates(dataArray.animeratings);
 		},
-		error: function() {
-			console.log("FUCK");
+		error: function(xhr, status, error) {
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
 		}
 	});
 }
