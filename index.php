@@ -1,16 +1,3 @@
-<?php
-	
-	require_once('./src/core/hummingboard.class.php');
-	require_once('./src/config.php');
-	
-	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
-	
-	$hummingbuser = (!empty($requestUrl[1])) ? $requestUrl[1] : "CybroX";
-	$hummingboard = new Hummingboard($hummingbuser);
-	
-	$userStatistics = $hummingboard->generateStatistics();
-	
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -13,11 +13,6 @@
  * Creative Commons website.
  */
  
-	/**
-	 * Request Unirest library
-	 */
-	require_once('./src/lib/Unirest.php');
-	
 	
 	/**
 	 * Hummingbird class
@@ -26,13 +21,16 @@
 	
 		public  $user;
 		private $pass;
+		private $db;
 		
 		/**
 		 * The class constructor
 		 */
 		public function __construct($user, $pass = ""){
 			
-			$this->user = $user;
+			$this->db = new mysqli(MYSQLHOST, MYSQLUSER, MYSQLPASS, MYSQLNAME);
+			
+			$this->user = $this->db->real_escape_string(strtolower($user));
 			$this->pass = $pass;
 			
 		}
@@ -77,10 +75,12 @@
 			
 			$userData = $this->requestData("users/".$user);
 			
+			if(empty($userData["name"])) $this->handleError("nouser");
+			
 			$effectiveUserData = array(
 				"username" => $userData["name"],
 				"useravat" => $userData["avatar"],
-				"userdata" => $userData["life_spent_on_anime"]
+				"usertime" => $userData["life_spent_on_anime"]
 			);
 			
 			return $effectiveUserData;
@@ -138,9 +138,10 @@
 				
 			} else {
 			
+				$userData  = $this->readUserData($user);
 				$userAnime = $this->readAllAnime($user);
 			
-				$animeWatchd = array();
+				$animeWatchd = "";
 				$animeTypeof = array("TV" => 0, "Movie" => 0, "Special" => 0, "OVA" => 0, "ONA" => 0);
 				
 				$animeAmount = array(
@@ -180,7 +181,7 @@
 						$animeRating[$a["rating"]["value"]]["episodes"] += $a["episodes_watched"];
 					}
 					
-					array_push($animeWatchd, array($a["last_watched"], $a["anime"]["title"], $a["anime"]["cover_image"]));
+					$animeWatchd .= $a["anime"]["slug"].", ";
 					
 				}
 				
@@ -188,28 +189,11 @@
 				unset($animeTypeof["music"]);
 				unset($animeTypeof[""]);
 				
-				$userData = $this->readUserData($user);
-				
-				$userStatistics = array(
-					"_userdata" => $userData,
-					"animetype" => $animeTypeof,
-					"animeamnt" => $animeAmount,
-					"animertng" => $animeRating,
-					"animelist" => $animeWatchd
-				);
-				
-				$this->cacheData($userStatistics);
+				$userInfo = $this->cacheData($userData, $animeWatchd, $animeAmount, $animeRating, $animeTypeof);
+				$userStatistics =  "{\"state\": \"4\", \"error\": \"\", \"data\": ".$userInfo."}";
 			}
 			
 			return $userStatistics;
-		}
-		
-		
-		/**
-		 * Create cache file string
-		 */
-		private function cacheString(){
-			return "./src/cache/".strtolower($this->user).".json";
 		}
 		
 		
@@ -219,12 +203,43 @@
 		 * This function allows to create a new cache file
 		 * or edit an existing file to cache an user's data.
 		 */
-		protected function cacheData($cacheData){
+		protected function cacheData($userData, $animeWatchd, $animeAmount, $animeRating, $animeTypeof){
 		
-			$cacheFile = $this->cacheString();
-			$cacheJson = json_encode($cacheData);
+			$userExis = $this->db->query("SELECT `id` FROM `hb_user` WHERE `name` = '".$this->user."'");
 			
-			file_put_contents ($cacheFile, $cacheJson);
+			// Please forgive me the sin of storing json in a sql-db
+			$inpQuery = "
+				`name` = '".$this->user."',
+				`hbname` = '".$userData['username']."',
+				`avatar` = '".$userData['useravat']."',
+				`animetime` = '".$userData['usertime']."',
+				`animelist` = '".$animeWatchd."',
+				`animeallocation` = '".json_encode($animeAmount)."',
+				`animeratings` = '".json_encode($animeRating)."',
+				`animetypes` = '".json_encode($animeTypeof)."',
+				`lastupdated` = '".time()."'
+			";
+			
+			if($userExis->num_rows === 1){
+				$this->db->query("UPDATE `hb_user` SET ".$inpQuery." WHERE `name` = '".$this->user."'");
+			} else {
+				$this->db->query("INSERT INTO `hb_user` SET ".$inpQuery);
+			}
+
+			$userData = array(
+				"name" => $this->user,
+				"hbname" => $userData['username'],
+				"avatar" => $userData['useravat'],
+				"animetime" => $userData['usertime'],
+				"animelist" => $animeWatchd,
+				"animeallocation" => json_encode($animeAmount),
+				"animeratings" => json_encode($animeRating),
+				"animetypes" => json_encode($animeTypeof),
+				"lastupdated" => time()
+			);
+			
+			return json_encode($userData);
+			
 		}
 		
 		
@@ -237,15 +252,14 @@
 		 */
 		protected function checkCache(){
 			
-			$cacheTime = 86400;
-			$cacheFile = $this->cacheString();
+			$userData = $this->db->query("SELECT `lastupdated` FROM `hb_user` WHERE `name` = '".$this->user."'");
 			
-			if(!file_exists($cacheFile)) return false;
+			if($userData->num_rows === 1){
+				$userInfo = $userData->fetch_assoc();
+				return ((time() - 86400) > $userInfo['lastupdated']) ? false : true;
+			}
 			
-			if(filemtime($cacheFile) < (time() - $cacheTime)) return false;
-			
-			return true;
-			
+			return false;
 		}
 		
 		
@@ -258,11 +272,10 @@
 		 */
 		protected function getCache(){
 		
-			$cacheFile = $this->cacheString();
-			$cacheData = file_get_contents($cacheFile);
-			$cacheJson = json_decode($cacheData, true);
+			$userData = $this->db->query("SELECT * FROM `hb_user` WHERE `name` = '".$this->user."'");
+			$userInfo = $userData->fetch_assoc();
 			
-			return $cacheJson;
+			return "{\"state\": \"4\", \"error\": \"\", \"data\": ".json_encode($userInfo)."}";
 		
 		}
 		
@@ -286,6 +299,19 @@
 			
 			return $years." Years, ".$months." Months, ".$days." Days, ".$hours." Hours, ".$minutes." Minutes";
 			
+		}
+		
+		
+		/**
+		 * Output an error
+		 *
+		 * This function will output an error for the
+		 * requesting ajax script
+		 */
+		public function handleError($errorMessage){
+		
+			die("{\"state\": \"0\", \"error\": \"".$errorMessage."\", \"data\": \"\"}");
+		
 		}
 	}
 	
