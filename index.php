@@ -63,7 +63,7 @@
 		<div id="statsPage">
 			<div id="statsUpper">
 				<section id="statsState">
-					<div class="title"><h2>Anime allocation</h2></div>
+					<div class="title"><h2>Anime Allocation</h2></div>
 					<div class="graph" id="graphState"></div>
 				</section>
 				<section id="statsRates">
