@@ -15,15 +15,91 @@
 @font-face {font-family: 'Ubuntu-Medium'; src: url('../font/ubuntu-medium-webfont.woff') format('woff'); font-weight: normal; font-style: normal;}
 @font-face {font-family: 'Ubuntu-Bold'; src: url('../font/ubuntu-bold-webfont.woff') format('woff'); font-weight: normal; font-style: normal;}
 
-* {
-	font-family: Ubuntu-Regular;
-}
+* {font-family: Ubuntu-Regular;}
+a {text-decoration: none;}
 
 body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 	background: url('../img/background.png') left top repeat #999;
+}
+
+
+#landingInfo {
+	position: absolute;
+	text-align:center;
+	top: 50%;
+	left: 25%;
+	width: 50%;
+	height: 300px;
+	margin-top: -150px;
+}
+
+#landingTitle {
+	margin: 0;
+	padding: 0;
+	color: #bbb;
+	font-size: 4em;
+	text-align: center;
+	text-shadow: 0 -1px 1px #999;
+	-moz-text-shadow: 0 -1px 1px #999;
+	-webkit-text-shadow: 0 -1px 1px #999;
+}
+
+#landingSubline {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	color: #aaa;
+}
+
+#landingForm {
+	padding: 30px 0;
+}
+
+#landingInput, #landingSubmit {
+	padding: 10px 20px;
+	background: #ddd;
+	outline: 0 !important;
+	font-family: Ubuntu-Medium;
+}
+
+#landingInput {
+	width: 40%;
+	border: 1px solid #ddd;
+	border-radius: 5px 0 0 5px;
+	-moz-border-radius: 5px 0 0 5px;
+	-webkit-border-radius: 5px 0 0 5px;
+	box-shadow: inset 1px 1px 1px #999;
+	-moz-box-shadow: inset 1px 1px 1px #999;
+	-webkit-box-shadow: inset 1px 1px 1px #999;
+}
+
+#landingSubmit:hover, #landingInput:focus {
+	color: #436EEE;
+}
+
+#landingInput, #landingInput:focus, #landingSubmit, #landingSubmit:hover {
+	transition: color 0.5s ease-in-out;
+	-moz-transition: color 0.5s ease-in-out;
+	-webkit-transition: color 0.5s ease-in-out;
+}
+
+#landingSubmit {
+	color: #999;
+	width: 20%;
+	border: 1px solid #ccc;
+	border-radius: 0 5px 5px 0;
+	-moz-border-radius: 0 5px 5px 0;
+	-webkit-border-radius: 0 5px 5px 0;
+	box-shadow: 1px 1px 1px #999;
+	-moz-box-shadow: 1px 1px 1px #999;
+	-webkit-box-shadow: 1px 1px 1px #999;
+}
+
+#landingSubmit:hover {
+	cursor: pointer;
 }
 
 #headContainer, #statsContainer {
@@ -33,11 +109,15 @@ body {
 #headContainer {
 	width: 96%;
 	height: 100px;
+	margin-top: -100px;
 	padding: 0 2%;
+	background: #fff;
 	box-shadow: 1px 0px 2px #999;
 	-moz-box-shadow: 1px 0px 2px #999;
 	-webkit-box-shadow: 1px 0px 2px #999;
-	background: #fff;
+	transition: margin-top 0.4s ease-in-out;
+	-moz-transition: margin-top 0.4s ease-in-out;
+	-webkit-transition: margin-top 0.4s ease-in-out;
 }
 
 #headline {
@@ -52,6 +132,7 @@ body {
 }
 
 #userimage {
+	display: block;
 	float: left;
 	height: 100%;
 	padding: 0 15px 0 0;
@@ -80,6 +161,13 @@ body {
 	color: #999;
 }
 
+#userfont:hover {color: #333;}
+#userfont:hover, #userfont {
+	transition: color 0.3s ease-in-out;
+	-moz-transition: color 0.3s ease-in-out;
+	-webkit-transition: color 0.3s ease-in-out;
+}
+
 #detailsContainer {
 	width: 100%;
 	padding-top: 15px;
@@ -104,6 +192,15 @@ body {
 	-moz-text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
 	-webkit-text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
 }
+
+#statsPage, #landingPage {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#landingPage { display: none; }
 
 #statsContainer {
 	position: absolute;
@@ -202,4 +299,56 @@ body {
 .graphVal, .graphDes {
 	font-size: 11px;
 	color: #666;
+}
+
+#loader {
+	display: none;
+	width: 75px;
+	height: 75px;
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+	margin: -37px 0 0 -37px;
+	
+}
+
+#loader div {
+	width: 15px;
+	height: 15px;
+	margin: 5px;
+	float: left;
+	background: rgba(0,0,0,0);
+}
+
+#loader div:not(:nth-of-type(5)){
+	animation: loaderBlink 2.5s linear infinite;
+	-webkit-animation: loaderBlink 2.5s linear infinite;
+}
+
+#loader div:nth-of-type(5) {
+	background: #1C86EE;
+	animation: loaderSpin 2.5s linear infinite;
+	-webkit-animation: loaderSpin 2.5s linear infinite;
+}
+
+@keyframes loaderBlink {
+	0%   {background: rgba(0,0,0,0.1);}
+	45%  {background: rgba(0,0,0,0);  }
+	100% {background: rgba(0,0,0,0.1);}
+}
+@-webkit-keyframes loaderBlink {
+	0%   {background: rgba(0,0,0,0.1);}
+	45%  {background: rgba(0,0,0,0);  }
+	100% {background: rgba(0,0,0,0.1);}
+}
+
+@keyframes loaderSpin {
+	0%   {-webkit-border-radius: 0px; -webkit-transform: rotate(0deg);  }
+	45%  {-webkit-border-radius: 6px;                                   }
+	100% {-webkit-border-radius: 0px; -webkit-transform: rotate(360deg);}
+}
+@-webkit-keyframes loaderSpin {
+	0%   {-webkit-border-radius: 0px; -webkit-transform: rotate(0deg);  }
+	45%  {-webkit-border-radius: 6px;                                   }
+	100% {-webkit-border-radius: 0px; -webkit-transform: rotate(360deg);}
 }

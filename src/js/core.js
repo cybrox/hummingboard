@@ -22,18 +22,20 @@
  */
 function loadUserStats(username){
 
+	$('#landingPage').hide();
+	$('#loader').show();
+	
 	$.ajax({
 		type: 'GET',
 		dataType: 'json',
 		url: './src/api/index.php?user='+username,
 		success: function(jsonData){
 		
+			window.history.pushState({}, username+" ~ Hummingboard", "/"+username);
 			dataArray = jsonData.data;
-		
-			$('#graphState').css({"width": "80%","height": "80%"});
-			$('#graphRates').css({"width": "80%","height": "80%"});
-			$('#graphTypes').css({"width": "80%","height": "80%"});
-
+			
+			$('#loader').hide();
+			$('#statsPage').fadeIn('fast');
 			updateInterface(dataArray);
 			
 			generateStatsTypes(dataArray.animetypes);
@@ -50,15 +52,49 @@ function loadUserStats(username){
 
 
 /**
+ * Display landing page
+ *
+ * This function will display the landing
+ * page if the user call the site without
+ * any defined user name.
+ */
+function embedLandingPage(){
+
+	$('#statsPage').hide();
+	$('#landingPage').fadeIn('fast');
+
+}
+
+
+/**
+ * Submit landing page
+ */
+function submitLandingPage(){
+	loadUserStats($('#landingInput').val());
+}
+
+
+/**
  * Update interface
  */
 function updateInterface(dataArray){
 
+	var hummingLink = "http://hummingbird.me/users/"+dataArray.name+"/";
+
 	$('#useravatar').attr("src", dataArray.avatar);
+	$('#headpart').attr("href", hummingLink);
+	$('#userfont').attr("href", hummingLink);
 	$('#userfont').text(dataArray.hbname);
 	$('#anmc').text(dataArray.animeallocation.total.anime);
 	$('#epsc').text(dataArray.animeallocation.total.episodes);
 	$('#anitime').text(generateAnimeTime(dataArray.animetime));
+	
+	$('#useravatar').load(function(){
+		$('#headContainer').css("margin-top", "0px");
+		$('#graphState').css({"width": "80%","height": "80%"});
+		$('#graphRates').css({"width": "80%","height": "80%"});
+		$('#graphTypes').css({"width": "80%","height": "80%"});
+	});
 }
 
 
