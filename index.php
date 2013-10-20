@@ -1,3 +1,15 @@
+<?php
+		
+	require_once('./src/core/config.php');
+	
+	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
+		
+	$nameUrlP = 2;
+	$userName = (empty($requestUrl[$nameUrlP])) ? "CybroX" : $requestUrl[$nameUrlP];
+
+	echo $userName;
+	
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,21 +24,21 @@
 	
 	<link href="<?php echo DIRURL; ?>src/css/style.css" rel="stylesheet" />
 	
-	<title><?php echo $userStatistics["_userdata"]["username"]; ?> ~ Hummingboard</title>
+	<title>Home ~ Hummingboard</title>
 </head>
 <body>
 
 	<div id="headContainer">
 		<div id="headline">
 			<div id="username">
-				<img id="useravatar" src="<?php echo $userStatistics["_userdata"]["useravat"]; ?>" alt=""/>
-				<span id="userfont"><?php echo $userStatistics["_userdata"]["username"]; ?></span>
+				<img id="useravatar" src="" alt=""/>
+				<span id="userfont"></span>
 			</div>
 			<div id="detailsContainer">
-				<span class="descr">Anime </span><span class="anime"><?php echo $userStatistics["animeamnt"]["total"]["anime"]; ?></span>
+				<span class="descr">Anime </span><span class="anime" id="anmc"></span>
 				<span class="divid"> | </span>
-				<span class="episd"><?php echo $userStatistics["animeamnt"]["total"]["episodes"]; ?></span><span class="descr"> Episodes</span><br />
-				<span id="anitime"><?php echo $hummingboard->generateAnimeTime($userStatistics["_userdata"]["userdata"]); ?></span>
+				<span class="episd" id="epsc"></span><span class="descr"> Episodes</span><br />
+				<span id="anitime"></span>
 			</div>
 		</div>
 	</div>
@@ -57,14 +69,7 @@
 	<script type="text/javascript" src="src/js/core.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			resizeStatsContainer();
-			generateStats(<?php echo json_encode($userStatistics); ?>);
-		});
-		
-		/* Listener to prevent resizing bug (temp) */
-		$(window).resize(function(){
-			resizeStatsContainer();
-			generateStats(<?php echo json_encode($userStatistics); ?>);
+			loadUserStats("<?php echo strtolower($userName);?>");
 		});
 	</script>
 	

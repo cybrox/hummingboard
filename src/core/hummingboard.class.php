@@ -232,9 +232,9 @@
 				"avatar" => $userData['useravat'],
 				"animetime" => $userData['usertime'],
 				"animelist" => $animeWatchd,
-				"animeallocation" => json_encode($animeAmount),
-				"animeratings" => json_encode($animeRating),
-				"animetypes" => json_encode($animeTypeof),
+				"animeallocation" => $animeAmount,
+				"animeratings" => $animeRating,
+				"animetypes" => $animeTypeof,
 				"lastupdated" => time()
 			);
 			
@@ -275,6 +275,10 @@
 			$userData = $this->db->query("SELECT * FROM `hb_user` WHERE `name` = '".$this->user."'");
 			$userInfo = $userData->fetch_assoc();
 			
+			$userInfo['animeallocation'] = json_decode($userInfo['animeallocation']);
+			$userInfo['animeratings'] = json_decode($userInfo['animeratings']);
+			$userInfo['animetypes'] = json_decode($userInfo['animetypes']);
+			
 			return "{\"state\": \"4\", \"error\": \"\", \"data\": ".json_encode($userInfo)."}";
 		
 		}
@@ -310,7 +314,7 @@
 		 */
 		public function handleError($errorMessage){
 		
-			die("{\"state\": \"0\", \"error\": \"".$errorMessage."\", \"data\": \"\"}");
+			die("{\"state\": \"3\", \"error\": \"".$errorMessage."\", \"data\": \"\"}");
 		
 		}
 	}

@@ -20,15 +20,41 @@
  * generation process, it will call
  * all needed subfunctions.
  */
-function generateStats(dataArray){
+function loadUserStats(username){
 	
-	$('#graphState').css({"width": "80%","height": "80%"});
-	$('#graphRates').css({"width": "80%","height": "80%"});
-	$('#graphTypes').css({"width": "80%","height": "80%"});
+	$.ajax({
+		type: 'GET',
+		dataType: 'json',
+		url: './src/api/?user='+username,
+		success: function(jsonData){
+			dataArray = jsonData.data;
+		
+			$('#graphState').css({"width": "80%","height": "80%"});
+			$('#graphRates').css({"width": "80%","height": "80%"});
+			$('#graphTypes').css({"width": "80%","height": "80%"});
 
-	generateStatsTypes(dataArray["animetype"]);
-	generateStatsState(dataArray["animeamnt"]);
-	generateStatsRates(dataArray["animertng"]);
+			updateInterface(dataArray);
+			
+			generateStatsTypes(dataArray.animetypes);
+			generateStatsState(dataArray.animeallocation);
+			generateStatsRates(dataArray.animeratings);
+		},
+		error: function() {
+			console.log("FUCK");
+		}
+	});
+}
+
+
+/**
+ * Update interface
+ */
+function updateInterface(dataArray){
+
+	$('#useravatar').attr("src", dataArray.avatar);
+	$('#userfont').text(dataArray.hbname);
+	$('#anmc').text(dataArray.animeallocation.total.anime);
+	$('#epsc').text(dataArray.animeallocation.total.episodes);
 }
 
 
