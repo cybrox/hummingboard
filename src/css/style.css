@@ -3,7 +3,7 @@
  * Simple but elegant Hummingbird stats page
  *
  * Written and copyrighted 2013+
- * by Sven Marc 'CybroX' Gehring
+ * by Sven Marc 'CybroX' Gehringdiv
  *
  * Licensed under CC BY-SA 3.0
  * For additional informations, please read the
@@ -181,7 +181,7 @@ body {
 	font-size: 0.5em;
 }
 
-.divid {color: #FAFAFA;}
+.divid {color: #BBBBBB;}
 .descr {color: #BBBBBB;}
 .anime {color: hsla(19, 100%, 64%, .7);}
 .episd {color: hsla(225, 83%, 60%, .5);}
