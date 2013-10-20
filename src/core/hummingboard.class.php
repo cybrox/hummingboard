@@ -285,28 +285,6 @@
 		
 		
 		/**
-		 * Generate anime time string
-		 *
-		 * This function will generate the -spent on anime-
-		 * string out of the given numbers of seconds.
-		 */
-		public function generateAnimeTime($totalTime){
-			
-			$years   = floor($totalTime / 525948.766);
-			$left    = $totalTime % 525948.766;
-			$months  = floor($left / 43829.766);
-			$left    = $left % 43829.0639;
-			$days    = floor($left / 1440);
-			$left    = $left % 1440;
-			$hours   = floor($left / 60);
-			$minutes = $left % 60;
-			
-			return $years." Years, ".$months." Months, ".$days." Days, ".$hours." Hours, ".$minutes." Minutes";
-			
-		}
-		
-		
-		/**
 		 * Output an error
 		 *
 		 * This function will output an error for the

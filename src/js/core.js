@@ -27,6 +27,9 @@ function loadUserStats(username){
 		dataType: 'json',
 		url: './src/api/?user='+username,
 		success: function(jsonData){
+			
+			console.log(jsonData);
+		
 			dataArray = jsonData.data;
 		
 			$('#graphState').css({"width": "80%","height": "80%"});
@@ -55,6 +58,30 @@ function updateInterface(dataArray){
 	$('#userfont').text(dataArray.hbname);
 	$('#anmc').text(dataArray.animeallocation.total.anime);
 	$('#epsc').text(dataArray.animeallocation.total.episodes);
+	$('#anitime').text(generateAnimeTime(dataArray.animetime));
+}
+
+
+/**
+ * Generate anime time string
+ *
+ * This function will generate a string
+ * that contains the user's watched anime
+ * time.
+ */
+function generateAnimeTime(totalTime){
+
+	years   = Math.floor(totalTime / 525948.766);
+	left    = totalTime % 525948.766;
+	months  = Math.floor(left / 43829.766);
+	left    = left % 43829.0639;
+	days    = Math.floor(left / 1440);
+	left    = left % 1440;
+	hours   = Math.floor(left / 60);
+	minutes = Math.floor(left % 60);
+	
+	return years+" Years, "+months+" Months, "+days+" Days, "+hours+" Hours, "+minutes+" Minutes";
+	
 }
 
 

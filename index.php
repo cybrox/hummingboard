@@ -7,8 +7,6 @@
 	$nameUrlP = 2;
 	$userName = (empty($requestUrl[$nameUrlP])) ? "CybroX" : $requestUrl[$nameUrlP];
 
-	echo $userName;
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,16 +28,21 @@
 
 	<div id="headContainer">
 		<div id="headline">
-			<div id="username">
-				<img id="useravatar" src="" alt=""/>
+			<div class="headpart">
+				<div id="userimage">
+					<img id="useravatar" src="" alt=""/>
+				</div>
 				<span id="userfont"></span>
 			</div>
-			<div id="detailsContainer">
-				<span class="descr">Anime </span><span class="anime" id="anmc"></span>
-				<span class="divid"> | </span>
-				<span class="episd" id="epsc"></span><span class="descr"> Episodes</span><br />
-				<span id="anitime"></span>
+			<div class="headpart">
+				<div id="detailsContainer">
+					<span class="descr">Anime </span><span class="anime" id="anmc"></span>
+					<span class="divid"> | </span>
+					<span class="episd" id="epsc"></span><span class="descr"> Episodes</span><br />
+					<span id="anitime"></span>
+				</div>
 			</div>
+			<div class="break"></div>
 		</div>
 	</div>
 
@@ -59,6 +62,11 @@
 			</section>
 			<div class="break"></div>
 		</div>
+<!--
+		<div id="statsMiddle">
+		
+		</div>
+-->
 		<div id="statsLower">
 			<section id="statsLists"></section>
 		</div>

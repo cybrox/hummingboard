@@ -23,12 +23,7 @@ body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	background: url('../img/background.png') left top repeat #bbb;
-}
-
-#headContainer, #statsContainer {
-	position: absolute;
-	left: 0;
+	background: url('../img/background.png') left top repeat #999;
 }
 
 #headContainer, #statsContainer {
@@ -36,14 +31,13 @@ body {
 }
 
 #headContainer {
-	width: 100%;
+	width: 96%;
 	height: 100px;
-	top: 0;
-	z-index: 50;
-	box-shadow: 0px 0px 5px #666;
-	-moz-box-shadow: 0px 0px 5px #666;
-	-webkit-box-shadow: 0px 0px 5px #666;
-	background: url('../img/headbackgorund.png') left top repeat #ececec;
+	padding: 0 2%;
+	box-shadow: 1px 0px 2px #999;
+	-moz-box-shadow: 1px 0px 2px #999;
+	-webkit-box-shadow: 1px 0px 2px #999;
+	background: #fff;
 }
 
 #headline {
@@ -51,73 +45,88 @@ body {
 	height: 100%;
 }
 
-#username {
-	height: 100%;
-	position: relative;
-	display: inline-block;
+.headpart {
 	width: 50%;
-	margin: 0;
+	height: 100%;
+	float: left;
+}
+
+#userimage {
+	float: left;
+	height: 100%;
+	padding: 0 15px 0 0;
+	margin: 0 20px 0 0;
+	border-right: 1px solid #999;
 }
 
 #useravatar {
-	display: inline-block;
-	height: 100%;
-	box-shadow: 0px 0 5px #444;
-	-moz-box-shadow: 0px 0 5px #444;
-	-webkit-box-shadow: 0px 0 5px #444;
+	height: 70%;
+	margin: 15px 0;
+	opacity: 0.7;
+}
+
+#useravatar:hover {opacity: 1;}
+
+#useravatar, #useravatar:hover{
+	transition: opacity 0.4s ease-in-out;
+	-moz-transition: opacity 0.4s ease-in-out;
+	-webkit-transition: opacity 0.4s ease-in-out;
 }
 
 #userfont {
-	position: absolute;
 	display: inline-block;
-	padding: 10px 0 0 20px;
-	font-family: Ubuntu-Bold, Arial;
+	padding-top: 15px;
 	font-size: 3em;
-	color: hsla(0, 0%, 73%, .75);
-	text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
-	-moz-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
-	-webkit-text-shadow: 1px 1px 2px #fff, 0 0 #000, 1px 1px #fff;
+	color: #999;
 }
 
 #detailsContainer {
-	display: inline-block;
-	float: right;
-	text-align: right;
-	width: 45%;
-	padding: 15px 3% 0 0;
+	width: 100%;
+	padding-top: 15px;
 	font-size: 2em;
+	text-align: right;
 }
 
-#detailsContainer span:not(.divid) {
+#anitime {
+	display: block;
+	color: #999;
+	font-size: 0.5em;
+}
+
+.divid {color: #FAFAFA;}
+.descr {color: #BBBBBB;}
+.anime {color: hsla(19, 100%, 64%, .7);}
+.episd {color: hsla(225, 83%, 60%, .5);}
+
+.anime, .episd {
 	font-family: Ubuntu-Medium, Arial;
 	text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
 	-moz-text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
 	-webkit-text-shadow: -1px 0 6px #fff, 0 0 #000, 1px 1px #fff;
 }
 
-#anitime {
-	color: #999;
-	font-size: 0.5em;
-}
-
-.divid {color: #DDDDDD;}
-.descr {color: #BBBBBB;}
-.anime {color: hsla(19, 100%, 64%, .7);}
-.episd {color: hsla(225, 83%, 60%, .5);}
-
 #statsContainer {
+	position: absolute;
+	left: 0;
+	top: 100px;
 	width: 100%;
 	height: 90%;
+	height: calc(100% - 100px);
 	top: 100px;
 	z-index: 20;
 }
 
 #statsUpper, #statsLower {
 	width: 100%;
-	height: 50%;
+	height: 47%;
 }
 
-#statsUpper {
+#statsMiddle {
+	width: 100%;
+	height: 6%;
+}
+
+#statsUpper, #statsMiddle {
 	box-shadow: 0px 1px 0 #666;
 	-moz-box-shadow: 0px 1px 0 #666;
 	-webkit-box-shadow: 0px 1px 0 #666;
