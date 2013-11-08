@@ -120,10 +120,6 @@ body {
 
 #copyright:hover { opacity: 1; }
 
-#headContainer, #statsContainer {
-	min-width: 1200px; /* no mobile opt atm */
-}
-
 #headContainer {
 	width: 96%;
 	height: 100px;
