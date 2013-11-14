@@ -48,7 +48,7 @@ function loadUserStats(username){
 			generateStatsRates(dataArray.animeratings);
 		},
 		error: function(xhr, status, error) {
-			console.log("Unknown error sneaked in, please report me this.");
+			console.log("Something went wrong, please hit me up if this problem won't go away in the next few minutes.");
 		}
 	});
 }

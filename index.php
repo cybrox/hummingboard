@@ -1,5 +1,7 @@
 <?php
-		
+	
+	set_time_limit(0);
+	
 	require_once('./src/core/config.php');
 	
 	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
@@ -52,7 +54,7 @@
 		<div id="landingPage">
 			<div id="landingInfo">
 				<h1 id="landingTitle">Hummingboard</h1>
-				<h4 id="landingSubline">Generating simple Hummingboard.me stats.</h4>
+				<h4 id="landingSubline">Generating simple Hummingbird.me stats.</h4>
 				<div id="landingForm">
 					<input id="landingInput" type="text" name="landingInput" placeholder="Enter a hummingbird name to generate stats."/>
 					<button id="landingSubmit" onClick="submitLandingPage();">Generate Stats</button>
