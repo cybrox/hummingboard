@@ -61,10 +61,10 @@
 	/* Calculate watchtime */
 	$timeLable    = array(" year", " month", " day", " hour", " minute");
 	$watchTime    = array();
-	$watchTime[0] = floor($responseData['life_spent_on_anime'] / 525948.766);
-	$timeLeft     = $responseData['life_spent_on_anime'] % 525948.766;
-	$watchTime[1] = floor($timeLeft / 43829.766);
-	$timeLeft     = $timeLeft % 43829.0639;
+	$watchTime[0] = floor($responseData['life_spent_on_anime'] / 525948);
+	$timeLeft     = $responseData['life_spent_on_anime'] % 525948;
+	$watchTime[1] = floor($timeLeft / 43829);
+	$timeLeft     = $timeLeft % 43829;
 	$watchTime[2] = floor($timeLeft / 1440);
 	$timeLeft     = $timeLeft % 1440;
 	$watchTime[3] = floor($timeLeft / 60);
@@ -123,8 +123,7 @@
 	/* Create image and allocate used colors */
 	$signatureImg = ImageCreateTrueColor($imgSizeX, $imgSizeY);
 	
-	$signatureBg0 = imagecolorallocatealpha($signatureImg, 0, 0, 0, $imgBoxAp);
-	$signatureBg1 = ImageColorAllocate($signatureImg, 0, 0, 0);
+	$signatureBg1 = imagecolorallocatealpha($signatureImg, 0, 0, 0, $imgBoxAp);
 	$signatureTx1 = ImageColorAllocate($signatureImg, $imgColr1, $imgColr1, $imgColr1);
 	$signatureTx2 = ImageColorAllocate($signatureImg, $imgColr2, $imgColr2, $imgColr2);
 	$signatureFn1 = './lib/font/Ubuntu-'.$imgFontF.'.ttf';
@@ -132,10 +131,9 @@
 	
 	
 	/* Add informations to image */
-	imagecolortransparent($signatureImg, $signatureBg1);
 	imagecopyresampled($signatureImg, $usrCover, 0, 0, 0, 43, $imgSizeX, $imgSizeY, 760, 164);
 	imagecopyresampled($signatureImg, $usrAvatr, $avaPaddB, $avaPaddB, 0, 0, $avaSizeB, $avaSizeB, 190, 190);
-	imagefilledrectangle($signatureImg, $boxPntX1, $boxPntY1, $boxPntX2, $boxPntY2, $signatureBg0);
+	imagefilledrectangle($signatureImg, $boxPntX1, $boxPntY1, $boxPntX2, $boxPntY2, $signatureBg1);
 	imagefttext($signatureImg, $imgFonS1, 0, $fntOffsX, $fntUserY, $signatureTx1, $signatureFn1, $responseData['name']);
 	imagefttext($signatureImg, $imgFonS2, 0, $fntOffsX, $fntAnmeY, $signatureTx2, $signatureFn1, $signatureSt1);
 	imagefttext($signatureImg, $imgFonS2, 0, $fntOffsX, $fntTimeY, $signatureTx1, $signatureFn1, $timeWatched);
