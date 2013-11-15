@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	
+	<meta name="author" content="CybroX" />
+	<meta name="copyright" content="2013" CybroX" />
+
+	<link type="image/x-icon" href="http://hummingboard.me/src/img/favicon.ico" rel="shortcut icon"  />
+	<link type="image/x-icon" href="http://hummingboard.me/http://cybrox.eu/src/img/favicon.ico" rel="icon" type="image/x-icon" />
+	
+	<link href="http://hummingboard.me/src/css/style.css" rel="stylesheet" />
+	<style type="text/css">
+		body {
+			overflow: auto !important;
+		}
+		
+		#playground {
+			width: 80%;
+			height: auto;
+			margin: 100px 10%;
+		}
+		
+		#headline {
+			text-align: center;
+			border-bottom: 1px soldi #ccc;
+		}
+		
+		#playbox {
+			border: 1px dotted #bbb;
+			margin-top: 10px;
+		}
+		
+		#previewImage {
+			width: 100%;
+			height: auto;
+			padding: 20px 0;
+			background: #bbb;
+			text-align: center;
+		}
+		
+		#preview {
+			display: inline-block;
+		}
+		
+		.threeholder {
+			width: 100%;
+		}
+		
+		.threepart {
+			float: left;
+			width: 30%;
+			padding: 10px 1.5%;
+		}
+		
+		.threeheader {
+			text-align: center;
+			background: #ccc;
+		}
+		
+		.floatbreak {clear: both;}
+		
+		input {
+			width: 100%;
+			border: 1px solid #ddd;
+			background: #eee;
+			padding: 5px 10px;
+			border-radius: 5px ;
+			-moz-border-radius: 5px ;
+			-webkit-border-radius: 5px ;
+			box-shadow: inset 1px 1px 1px #999;
+			-moz-box-shadow: inset 1px 1px 1px #999;
+			-webkit-box-shadow: inset 1px 1px 1px #999;
+		}
+		
+		input:hover, input:focus {
+			outline: 0 !important;
+		}
+		
+		input[type="submit"]{
+			box-shadow: 1px 1px 1px #999;
+			-moz-box-shadow: 1px 1px 1px #999;
+			-webkit-box-shadow: 1px 1px 1px #999;
+		}
+		
+		input[type="submit"]:hover{
+			cursor: pointer;
+		}
+	</style>
+	
+	<title>Sig-Playground ~ Hummingboard</title>
+</head>
+<body>
+
+	<div id="playground">
+	
+		<h1 id="landingTitle">Hummingboard signature playground</h1>
+		
+		<section id="playbox">
+			<div id="previewImage">
+				<img id="preview" src="playground.php" alt="" />
+			</div>
+			<section id="settings">
+			
+				<div class="threeholder threeheader">
+					<div class="threepart"><span>Option</span></div>
+					<div class="threepart"><span>Default Value</span></div>
+					<div class="threepart"><span>Your Choice</span></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Image Width</span></div>
+					<div class="threepart"><span>500 (px)</span></div>
+					<div class="threepart"><input type="text" name="imgSizeX" id="imgSizeX" value="500"/></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Image Height</span></div>
+					<div class="threepart"><span>100 (px)</span></div>
+					<div class="threepart"><input type="text" name="imgSizeY" id="imgSizeY" value="100" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Black Box Alpha (Transparency)</span></div>
+					<div class="threepart"><span>60 (0 = filled, 100 = transparent)</span></div>
+					<div class="threepart"><input type="text" name="imgBoxAp" id="imgBoxAp" value="60" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Main Color (Name + Animetime)</span></div>
+					<div class="threepart"><span>255 (white)</span></div>
+					<div class="threepart"><input type="text" name="imgColr1" id="imgColr1" value="255" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Second Color (Animetime-Title)</span></div>
+					<div class="threepart"><span>210 (light-gray)</span></div>
+					<div class="threepart"><input type="text" name="imgColr2" id="imgColr2" value="210" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Main Fontsize (Name)</span></div>
+					<div class="threepart"><span>15 (pt)</span></div>
+					<div class="threepart"><input type="text" name="imgFonS1" id="imgFonS1" value="15" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Second Fontsize (Animetime-Title + Time)</span></div>
+					<div class="threepart"><span>13 (pt)</span></div>
+					<div class="threepart"><input type="text" name="imgFonS2" id="imgFonS2" value="13" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Font Type</span></div>
+					<div class="threepart"><span>"R"egular, can also be "M"edi or "B"old</span></div>
+					<div class="threepart"><input type="text" name="imgFontF" id="imgFontF" value="R" /></div>
+					<div class="floatbreak"></div>
+				</div>
+			
+				<div class="threeholder">
+					<div class="threepart"><span>Apply changes<br />
+					<sub>Username will not affect the example image above, it will only be written into your generated signature link so you can directly copy it out.</sub></span></div>
+					<div class="threepart"><input id="username" placeholder="username" type="text" name="username" value="" /></div>
+					<div class="threepart"><input id="submb" type="submit" name="subm" value="Apply" /></div>
+					<div class="floatbreak"></div>
+				</div>
+				
+				<hr />
+				<span>Your Signature Link</span>
+				<input id="result" type="text" value="" />
+				
+			</section>
+		</section>
+	</div>
+	
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script>
+		
+		$(document).ready(function(){
+			$('#submb').click(function(){
+				
+				var imgSizeX = $('#imgSizeX').val();
+				var imgSizeY = $('#imgSizeY').val();
+				var imgBoxAp = $('#imgBoxAp').val();
+				var imgColr1 = $('#imgColr1').val();
+				var imgColr2 = $('#imgColr2').val();
+				var imgFonS1 = $('#imgFonS1').val();
+				var imgFonS2 = $('#imgFonS2').val();
+				var imgFontF = $('#imgFontF').val();
+				var username = $('#username').val();
+				
+				if(username == "") username = "username";
+				
+				var URLstring = imgSizeX+";"+imgSizeY+";"+imgBoxAp+";"+imgColr1+";"+imgColr2+";"+imgFonS1+";"+imgFonS2+";"+imgFontF;
+				
+				$('#result').val("http://sig.hummingboard.me/"+username+"/"+URLstring+"/.png");
+				$('#preview').attr("src", "playground.php?pref="+URLstring);
+				$('#preview').animate({"opacity": "0"}, 500);
+				$('#preview').load(function(){
+					$('#preview').animate({"opacity": "1"}, 500);
+				});
+				
+			});
+		});
+		
+	</script>
+</body>
+</html>

@@ -15,9 +15,7 @@
 	
 	header("Content-type: image/png");
 	
-	define("APIURL", "https://hummingbirdv1.p.mashape.com/");
-	define("APIKEY", "71IpOFQi3khmCFUOdGhvzlrV221YF0yy");
-	
+	require_once('./lib/config.php');
 	require_once('./lib/Unirest.php');
 	
 	
@@ -25,8 +23,11 @@
 	$requestUrl =  explode("/", $_SERVER["REQUEST_URI"]);
 	$userName   = (empty($requestUrl[1])) ? "" : $requestUrl[1];
 	$userOpts   = (empty($requestUrl[2])) ? "" : $requestUrl[2];
-	$userPref   =  explode(";", $userOpts);
-	
+	if(strstr($userOpts, ";")){
+		$userPref = explode(";", $userOpts);
+	} else {
+		$userPref = array();
+	}
 	
 	/* Allow adding fake suffixes for image recognisation */
 	if(strstr($userName, ".")){
@@ -66,41 +67,64 @@
 	$timeLeft    = $timeLeft % 1440;
 	$timeHours   = floor($timeLeft / 60);
 	$timeMinutes = floor($timeLeft % 60);
-	$timeWatchd1 = $timeYears." Years, ".$timeMonths." Months, ";
-	$timeWatchd2 = $timeDays." Days, ".$timeHours." Hours, ".$timeMinutes." Minutes";
+	$timeWatchd1 = $timeYears." year, ".$timeMonths." months, ";
+	$timeWatchd2 = $timeDays." days, ".$timeHours." hours, ".$timeMinutes." minutes";
 	
-	if($timeYears == 0 && $timeMonths == 0) $timeWatchd1 = "";
+	$timeWatched = ($timeYears == 0 && $timeMonths == 0) ? $timeWatchd2 : $timeWatchd1.$timeWatchd2;
 	
 	
-	/* Set image settings */
+	/* Load images from Hummingbird ... (I wanna have an imagecreatefrom* function -.-') */
+	               $usrAvatr = @imagecreatefromjpeg($responseData['avatar']);
+	if(!$usrAvatr) $usrAvatr = @imagecreatefrompng($responseData['avatar']);
+	if(!$usrAvatr) $usrAvatr = @imagecreatefromgif($responseData['avatar']);
+	               $usrCover = @imagecreatefromjpeg($responseData['cover_image']);
+	if(!$usrCover) $usrCover = @imagecreatefrompng($responseData['cover_image']);
+	if(!$usrCover) $usrCover = @imagecreatefromgif($responseData['cover_image']);
+	
+	
+	/* Read additional options */
 	$imgSizeX = (!empty($userPref[0])) ? $userPref[0]: 500; 
-	$imgSizeY = (!empty($userPref[1])) ? $userPref[1]: 100; 
-	
-	$usrAvatr = @imagecreatefromjpeg($responseData['avatar']);
-	if(!$usrAvatr){
-		$usrAvatr = @imagecreatefrompng($responseData['avatar']);
-		if(!$usrAvatr){
-			$usrAvatr = @imagecreatefromgif($responseData['avatar']);
-		}
-	}
+	$imgSizeY = (!empty($userPref[1])) ? $userPref[1]: 100;
+	$imgBoxAp = (!empty($userPref[2])) ? $userPref[2]: 60;
+	$imgColr1 = (!empty($userPref[3])) ? $userPref[3]: 255;
+	$imgColr2 = (!empty($userPref[4])) ? $userPref[4]: 210;
+	$imgFonS1 = (!empty($userPref[5])) ? $userPref[5]: 15;
+	$imgFonS2 = (!empty($userPref[6])) ? $userPref[6]: 13;
+	$imgFontF = (!empty($userPref[7])) ? $userPref[7]: "R";
 	
 	
-	/* Create image */
-	$signatureImg = @ImageCreateTrueColor($imgSizeX, $imgSizeY) or die ("Internal Error");
+	/* Calculate image values */
+	$avaSizeB = $imgSizeY * 0.8;
+	$avaPaddB = $imgSizeY * 0.1;
+	$boxPntX1 = $avaSizeB + $avaPaddB;
+	$boxPntX2 = $imgSizeX - $avaPaddB;
+	$boxPntY1 = $avaPaddB;
+	$boxPntY2 = $imgSizeY - $avaPaddB;
+	$fntOffsX = $boxPntX1 + $avaPaddB;
+	$fntUserY = 3 * $avaPaddB;
+	$fntAnmeY = $imgSizeY / 2 + 2 * $avaPaddB;
+	$fntTimeY = $fntAnmeY + $imgFonS1;
+	
+	
+	/* Create image and allocate used colors */
+	$signatureImg = ImageCreateTrueColor($imgSizeX, $imgSizeY);
+	
+	$signatureBg0 = imagecolorallocatealpha($signatureImg, 0, 0, 0, $imgBoxAp);
 	$signatureBg1 = ImageColorAllocate($signatureImg, 0, 0, 0);
-	$signatureBg2 = ImageColorAllocate($signatureImg, 70, 70, 70);
-	$signatureTx1 = ImageColorAllocate($signatureImg, 50, 50, 50);
-	$signatureTx2 = ImageColorAllocate($signatureImg, 75, 75, 75);
+	$signatureTx1 = ImageColorAllocate($signatureImg, $imgColr1, $imgColr1, $imgColr1);
+	$signatureTx2 = ImageColorAllocate($signatureImg, $imgColr2, $imgColr2, $imgColr2);
+	$signatureFn1 = './lib/font/Ubuntu-'.$imgFontF.'.ttf';
+	$signatureSt1 = "My life spent watching anime:";
 	
 	
 	/* Add informations to image */
 	imagecolortransparent($signatureImg, $signatureBg1);
-	imagefilledrectangle($signatureImg, 8, 8, 92, 92, $signatureBg2);
-	@imagecopyresampled($signatureImg, $usrAvatr, 10, 10, 0, 0, 80, 80, 190, 190);
-	ImageString($signatureImg, 5, 100, 10, $responseData['name'], $signatureTx1);
-	ImageString($signatureImg, 3, 100, 50, $timeWatchd1, $signatureTx1);
-	ImageString($signatureImg, 3, 100, 60, $timeWatchd2, $signatureTx1);
-	ImageString($signatureImg, 4, 100, 72, "spent on watching anime.", $signatureTx2);
+	imagecopyresampled($signatureImg, $usrCover, 0, 0, 0, 43, $imgSizeX, $imgSizeY, 760, 164);
+	imagecopyresampled($signatureImg, $usrAvatr, $avaPaddB, $avaPaddB, 0, 0, $avaSizeB, $avaSizeB, 190, 190);
+	imagefilledrectangle($signatureImg, $boxPntX1, $boxPntY1, $boxPntX2, $boxPntY2, $signatureBg0);
+	imagefttext($signatureImg, $imgFonS1, 0, $fntOffsX, $fntUserY, $signatureTx1, $signatureFn1, $responseData['name']);
+	imagefttext($signatureImg, $imgFonS2, 0, $fntOffsX, $fntAnmeY, $signatureTx2, $signatureFn1, $signatureSt1);
+	imagefttext($signatureImg, $imgFonS2, 0, $fntOffsX, $fntTimeY, $signatureTx1, $signatureFn1, $timeWatched);
 	
 	
 	/* Save and output image */

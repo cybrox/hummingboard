@@ -5,8 +5,9 @@ ProjectSettings
 ehthumbs.db
 Thumbs.db
 
-# Cachefiles #
-src/cache/*.json
+# Generated files #
+sig/img/*.png
 
-#Config#
+# Config #
 src/core/config.php
+sig/lib/config.php
