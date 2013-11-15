@@ -59,18 +59,27 @@
 	
 	
 	/* Calculate watchtime */
-	$timeYears   = floor($responseData['life_spent_on_anime'] / 525948.766);
-	$timeLeft    = $responseData['life_spent_on_anime'] % 525948.766;
-	$timeMonths  = floor($timeLeft / 43829.766);
-	$timeLeft    = $timeLeft % 43829.0639;
-	$timeDays    = floor($timeLeft / 1440);
-	$timeLeft    = $timeLeft % 1440;
-	$timeHours   = floor($timeLeft / 60);
-	$timeMinutes = floor($timeLeft % 60);
-	$timeWatchd1 = $timeYears." year, ".$timeMonths." months, ";
-	$timeWatchd2 = $timeDays." days, ".$timeHours." hours, ".$timeMinutes." minutes";
+	$timeLable    = array(" year", " month", " day", " hour", " minute");
+	$watchTime    = array();
+	$watchTime[0] = floor($responseData['life_spent_on_anime'] / 525948.766);
+	$timeLeft     = $responseData['life_spent_on_anime'] % 525948.766;
+	$watchTime[1] = floor($timeLeft / 43829.766);
+	$timeLeft     = $timeLeft % 43829.0639;
+	$watchTime[2] = floor($timeLeft / 1440);
+	$timeLeft     = $timeLeft % 1440;
+	$watchTime[3] = floor($timeLeft / 60);
+	$watchTime[4] = floor($timeLeft % 60);
+	$timeWatched  = "";
 	
-	$timeWatched = ($timeYears == 0 && $timeMonths == 0) ? $timeWatchd2 : $timeWatchd1.$timeWatchd2;
+	foreach($watchTime as $i => $time){
+		if($time == 0) continue;
+		if($time != 1) $timeLable[$i] .= "s";
+		
+		$timeWatched .= $time.$timeLable[$i].", ";
+	}
+	
+	$timeWatched = substr($timeWatched, 0, -2);
+	if(empty($timeWatched)) $timeWatched = "Too much to display here.";
 	
 	
 	/* Load images from Hummingbird ... (I wanna have an imagecreatefrom* function -.-') */
@@ -91,6 +100,11 @@
 	$imgFonS1 = (!empty($userPref[5])) ? $userPref[5]: 15;
 	$imgFonS2 = (!empty($userPref[6])) ? $userPref[6]: 13;
 	$imgFontF = (!empty($userPref[7])) ? $userPref[7]: "R";
+	$imgFontF = strtoupper($imgFontF);
+	
+	/* Check font parameter 'cause it can break everything */
+	$validFonts = array("R", "M", "B");
+	if(!in_array($imgFontF, $validFonts)) $imgFontF = "R";
 	
 	
 	/* Calculate image values */
