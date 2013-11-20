@@ -29,6 +29,7 @@
 		$userPref = array();
 	}
 	
+	
 	/* Allow adding fake suffixes for image recognisation */
 	if(strstr($userName, ".")){
 		$userPart = explode(".", $userName);
@@ -92,32 +93,32 @@
 	
 	
 	/* Read additional options */
-	$imgSizeX = (!empty($userPref[0])) ? $userPref[0]: 500; 
-	$imgSizeY = (!empty($userPref[1])) ? $userPref[1]: 100;
-	$imgBoxAp = (!empty($userPref[2])) ? $userPref[2]: 60;
-	$imgColr1 = (!empty($userPref[3])) ? $userPref[3]: 255;
-	$imgColr2 = (!empty($userPref[4])) ? $userPref[4]: 210;
-	$imgFonS1 = (!empty($userPref[5])) ? $userPref[5]: 15;
-	$imgFonS2 = (!empty($userPref[6])) ? $userPref[6]: 13;
-	$imgFontF = (!empty($userPref[7])) ? $userPref[7]: "R";
-	$imgFontF = strtoupper($imgFontF);
+	$imgSizeX = /*(!empty($userPref[0])) ? $userPref[0]:*/ 500; 
+	$imgSizeY = /*(!empty($userPref[1])) ? $userPref[1]:*/ 100;
+	$imgBoxAp = /*(!empty($userPref[2])) ? $userPref[2]:*/ 60;
+	$imgColr1 = /*(!empty($userPref[3])) ? $userPref[3]:*/ 255;
+	$imgColr2 = /*(!empty($userPref[4])) ? $userPref[4]:*/ 210;
+	$imgFonS1 = /*(!empty($userPref[5])) ? $userPref[5]:*/ 17;
+	$imgFonS2 = /*(!empty($userPref[6])) ? $userPref[6]:*/ 13;
+	$imgFontF = /*(!empty($userPref[7])) ? $userPref[7]:*/ "H";
 	
 	/* Check font parameter 'cause it can break everything */
-	$validFonts = array("R", "M", "B");
-	if(!in_array($imgFontF, $validFonts)) $imgFontF = "R";
+	$validFonts = array("R", "M", "B", "H");
+	if(!in_array($imgFontF, $validFonts)) $imgFontF = "H";
 	
 	
 	/* Calculate image values */
-	$avaSizeB = $imgSizeY * 0.8;
-	$avaPaddB = $imgSizeY * 0.1;
-	$boxPntX1 = $avaSizeB + $avaPaddB;
-	$boxPntX2 = $imgSizeX - $avaPaddB;
-	$boxPntY1 = $avaPaddB;
-	$boxPntY2 = $imgSizeY - $avaPaddB;
-	$fntOffsX = $boxPntX1 + $avaPaddB;
-	$fntUserY = 3 * $avaPaddB;
-	$fntAnmeY = $imgSizeY / 2 + 2 * $avaPaddB;
-	$fntTimeY = $fntAnmeY + $imgFonS1;
+	$sigMargn = $imgSizeY * 0.1;		// Margin  for the box and the avatar
+	$sigPaddn = $imgSizeY * 0.05;		// Padding for the box
+	$avaSizeB = $imgSizeY * 0.8;		// Avatar size, 80% of signature height (square)
+	$boxPntX1 = $avaSizeB + $sigMargn;	// X distance of the first  boxpoint
+	$boxPntX2 = $imgSizeX - $sigMargn;	// X distance of the second boxpoint
+	$boxPntY1 = $sigMargn;				// Y distance of the first  boxpoint
+	$boxPntY2 = $imgSizeY - $sigMargn-1;// Y distance of the second boxpoint
+	$fntOffsX = $boxPntX1 + $sigMargn;	// X offset of the font (distance from avatar)
+	$fntUserY = $sigMargn + $sigPaddn + $imgFonS1;
+	$fntAnmeY = $imgSizeY - $sigMargn - (2 * $sigPaddn) - $imgFonS2;
+	$fntTimeY = $fntAnmeY + $sigPaddn + $imgFonS2;
 	
 	
 	/* Create image and allocate used colors */
@@ -126,13 +127,13 @@
 	$signatureBg1 = imagecolorallocatealpha($signatureImg, 0, 0, 0, $imgBoxAp);
 	$signatureTx1 = ImageColorAllocate($signatureImg, $imgColr1, $imgColr1, $imgColr1);
 	$signatureTx2 = ImageColorAllocate($signatureImg, $imgColr2, $imgColr2, $imgColr2);
-	$signatureFn1 = './lib/font/Ubuntu-'.$imgFontF.'.ttf';
+	$signatureFn1 = './lib/font/Font-'.$imgFontF.'.ttf';
 	$signatureSt1 = "My life spent watching anime:";
 	
 	
 	/* Add informations to image */
 	imagecopyresampled($signatureImg, $usrCover, 0, 0, 0, 43, $imgSizeX, $imgSizeY, 760, 164);
-	imagecopyresampled($signatureImg, $usrAvatr, $avaPaddB, $avaPaddB, 0, 0, $avaSizeB, $avaSizeB, 190, 190);
+	imagecopyresampled($signatureImg, $usrAvatr, $sigMargn, $sigMargn, 0, 0, $avaSizeB, $avaSizeB, 190, 190);
 	imagefilledrectangle($signatureImg, $boxPntX1, $boxPntY1, $boxPntX2, $boxPntY2, $signatureBg1);
 	imagefttext($signatureImg, $imgFonS1, 0, $fntOffsX, $fntUserY, $signatureTx1, $signatureFn1, $responseData['name']);
 	imagefttext($signatureImg, $imgFonS2, 0, $fntOffsX, $fntAnmeY, $signatureTx2, $signatureFn1, $signatureSt1);

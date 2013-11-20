@@ -25,8 +25,8 @@
 	$userPref     = explode(";", $userOpts);
 	$responseData = array(
 		"name" => "cybrox",
-		"avatar" => "http://static.hummingbird.me/users/avatars/000/025/515/thumb/dca7dc42b6db16763a9587fb5ab37532_(1).jpeg?1384196341",
-		"cover_image" => "http://static.hummingbird.me/users/cover_images/000/025/515/thumb/wallpaper-2838683.jpg?1381410200",
+		"avatar" => "http://static.hummingbird.me/users/avatars/000/025/515/thumb/cg.fw.png?1384637637",
+		"cover_image" => "http://static.hummingbird.me/users/cover_images/000/025/515/thumb/wallpaper-1736374.jpg?1384717343",
 		"life_spent_on_anime" => "19594"
 	);
 	
@@ -63,20 +63,21 @@
 	$imgColr2 = (!empty($userPref[4])) ? $userPref[4]: 210;
 	$imgFonS1 = (!empty($userPref[5])) ? $userPref[5]: 15;
 	$imgFonS2 = (!empty($userPref[6])) ? $userPref[6]: 13;
-	$imgFontF = (!empty($userPref[7])) ? $userPref[7]: "R";
+	$imgFontF = (!empty($userPref[7])) ? $userPref[7]: "M";
 	
 	
 	/* Calculate image values */
-	$avaSizeB = $imgSizeY * 0.8;
-	$avaPaddB = $imgSizeY * 0.1;
-	$boxPntX1 = $avaSizeB + $avaPaddB;
-	$boxPntX2 = $imgSizeX - $avaPaddB;
-	$boxPntY1 = $avaPaddB;
-	$boxPntY2 = $imgSizeY - $avaPaddB;
-	$fntOffsX = $boxPntX1 + $avaPaddB;
-	$fntUserY = 3 * $avaPaddB;
-	$fntAnmeY = $imgSizeY / 2 + 2 * $avaPaddB;
-	$fntTimeY = $fntAnmeY + $imgFonS1;
+	$sigMargn = $imgSizeY * 0.10;		// Margin  for the box and the avatar
+	$sigPaddn = $imgSizeY * 0.05;		// Padding for the box
+	$avaSizeB = $imgSizeY * 0.80;		// Avatar size, 80% of signature height (square)
+	$boxPntX1 = $avaSizeB + $sigMargn;	// X distance of the first  boxpoint
+	$boxPntX2 = $imgSizeX - $sigMargn;	// X distance of the second boxpoint
+	$boxPntY1 = $sigMargn;				// Y distance of the first  boxpoint
+	$boxPntY2 = $imgSizeY - $sigMargn;	// Y distance of the second boxpoint
+	$fntOffsX = $boxPntX1 + $sigMargn;	// X offset of the font (distance from avatar)
+	$fntUserY = $sigMargn + $sigPaddn + $imgFonS1;
+	$fntAnmeY = $imgSizeY - $sigMargn - (2 * $sigPaddn) - $imgFonS2;
+	$fntTimeY = $fntAnmeY + $sigPaddn + $imgFonS2;
 	
 	
 	/* Create image and allocate used colors */
@@ -85,13 +86,13 @@
 	$signatureBg1 = imagecolorallocatealpha($signatureImg, 0, 0, 0, $imgBoxAp);
 	$signatureTx1 = ImageColorAllocate($signatureImg, $imgColr1, $imgColr1, $imgColr1);
 	$signatureTx2 = ImageColorAllocate($signatureImg, $imgColr2, $imgColr2, $imgColr2);
-	$signatureFn1 = './lib/font/Ubuntu-'.$imgFontF.'.ttf';
+	$signatureFn1 = './lib/font/Font-'.$imgFontF.'.ttf';
 	$signatureSt1 = "My life spent watching anime:";
 	
 	
 	/* Add informations to image */
 	imagecopyresampled($signatureImg, $usrCover, 0, 0, 0, 43, $imgSizeX, $imgSizeY, 760, 164);
-	imagecopyresampled($signatureImg, $usrAvatr, $avaPaddB, $avaPaddB, 0, 0, $avaSizeB, $avaSizeB, 190, 190);
+	imagecopyresampled($signatureImg, $usrAvatr, $sigMargn, $sigMargn, 0, 0, $avaSizeB, $avaSizeB, 190, 190);
 	imagefilledrectangle($signatureImg, $boxPntX1, $boxPntY1, $boxPntX2, $boxPntY2, $signatureBg1);
 	imagefttext($signatureImg, $imgFonS1, 0, $fntOffsX, $fntUserY, $signatureTx1, $signatureFn1, $responseData['name']);
 	imagefttext($signatureImg, $imgFonS2, 0, $fntOffsX, $fntAnmeY, $signatureTx2, $signatureFn1, $signatureSt1);
