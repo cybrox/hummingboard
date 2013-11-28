@@ -61,9 +61,9 @@ function loadUserStats(username){
  * page if the user call the site without
  * any defined user name.
  */
-function embedLandingPage(inputValue){
+function embedLandingPage(invalidinput){
 
-	if(inputValue !== "") $('#landingInput').attr("placeholder", inputValue);
+	if(inputValue !== "") $('#landingWhoops').text(invalidinput);
 	
 	$('#loader').hide();
 	$('#statsPage').hide();
