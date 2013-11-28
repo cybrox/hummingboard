@@ -59,6 +59,7 @@
 					<input id="landingInput" type="text" name="landingInput" placeholder="Enter a hummingbird name to generate stats."/>
 					<button id="landingSubmit" onClick="submitLandingPage();">Generate Stats</button>
 				</div>
+				<div id="landingWhoops"><p></p></div>
 				<span id="copyright">written with &#9825; by <a href="http://cybrox.eu">cybrox</a></span>
 			</div>
 		</div>
