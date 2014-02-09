@@ -48,6 +48,9 @@ function loadUserStats(username){
 			generateStatsRates(dataArray.animeratings);
 		},
 		error: function(xhr, status, error) {
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
 			console.log("Something went wrong, please hit me up if this problem won't go away in the next few minutes.");
 		}
 	});

@@ -18,7 +18,25 @@
 	 * Hummingbird class
 	 */
 	class Hummingboard {
+	
+		public  $user;
+		private $pass;
+		private $db;
 		
+		/**
+		 * The class constructor
+		 */
+		public function __construct($user, $pass = ""){
+			
+			$this->db = new mysqli(MYSQLHOST, MYSQLUSER, MYSQLPASS, MYSQLNAME);
+			
+			$this->user = $this->db->real_escape_string(strtolower($user));
+			$this->pass = $pass;
+			
+		}
+		
+		
+	
 		/**
 		 * Send a request to mashape hummingbird API
 		 *
@@ -57,7 +75,7 @@
 			
 			$userData = $this->requestData("users/".$user);
 			
-			if(empty($userData["name"])) return false;
+			if(empty($userData["name"])) $this->handleError("nouser");
 			
 			$effectiveUserData = array(
 				"username" => $userData["name"],
@@ -69,7 +87,202 @@
 			
 		}
 		
-	
+		
+		/**
+		 * Send multiple requests to get all anime
+		 *
+		 * The hummingbird API doesn't support the
+		 * "all" parameter* so this function will get
+		 * informations from all anime list tabs and
+		 * marge them together to one big array.
+		 * *(I guess, haven't found anything.)
+		 *
+		 * @param "user" {string} - User name to get anime from
+		 */
+		public function readAllAnime($user = ""){
+			
+			if(empty($user)) $user = $this->user;
+			
+			$userAnimeActive = $this->requestData("users/".$user."/library?status=currently-watching");
+			$userAnimePlannd = $this->requestData("users/".$user."/library?status=plan-to-watch");
+			$userAnimeComplt = $this->requestData("users/".$user."/library?status=completed");
+			$userAnimeOnhold = $this->requestData("users/".$user."/library?status=on-hold");
+			$userAnimeDroppd = $this->requestData("users/".$user."/library?status=dropped");
+		
+			$userAnime = array_merge(
+				$userAnimeActive,
+				$userAnimePlannd,
+				$userAnimeComplt,
+				$userAnimeOnhold,
+				$userAnimeDroppd
+			);
+		
+			return $userAnime;
+		
+		}
+		
+		
+		/**
+		 * Create Hummingboard information string
+		 *
+		 * This function will create a string which the
+		 * hummingboard will save to cache a user's data
+		 */
+		public function generateStatistics($user = ""){
+		
+			if(empty($user)) $user = $this->user;
+		
+			if($this->checkCache($user)){
+			
+				$userStatistics = $this->getCache($user);
+				
+			} else {
+			
+				$userData  = $this->readUserData($user);
+				$userAnime = $this->readAllAnime($user);
+			
+				$animeWatchd = "";
+				$animeTypeof = array("TV" => 0, "Movie" => 0, "Special" => 0, "OVA" => 0, "ONA" => 0);
+				
+				$animeAmount = array(
+					"currently-watching" => array("anime" => 0, "episodes" => 0),
+					"plan-to-watch" =>      array("anime" => 0, "episodes" => 0),
+					"completed" =>          array("anime" => 0, "episodes" => 0),
+					"on-hold" =>            array("anime" => 0, "episodes" => 0),
+					"dropped" =>            array("anime" => 0, "episodes" => 0),
+					"total" =>              array("anime" => 0, "episodes" => 0)
+				);
+				
+				$animeRating = array(
+					"-" =>   array("anime" => 0, "episodes" => 0), "0.0" => array("anime" => 0, "episodes" => 0),
+					"0.5" => array("anime" => 0, "episodes" => 0), "1.0" => array("anime" => 0, "episodes" => 0),
+					"1.5" => array("anime" => 0, "episodes" => 0), "2.0" => array("anime" => 0, "episodes" => 0),
+					"2.5" => array("anime" => 0, "episodes" => 0), "3.0" => array("anime" => 0, "episodes" => 0),
+					"3.5" => array("anime" => 0, "episodes" => 0), "4.0" => array("anime" => 0, "episodes" => 0),
+					"4.5" => array("anime" => 0, "episodes" => 0), "5.0" => array("anime" => 0, "episodes" => 0)
+				);
+				
+				
+				foreach($userAnime as $a){
+				
+					$animeAmount["total"]["anime"]++;
+					$animeAmount["total"]["episodes"] += $a["episodes_watched"];
+					$animeAmount[$a["status"]]["anime"]++;
+					$animeAmount[$a["status"]]["episodes"] += $a["episodes_watched"];
+					
+					
+					$animeTypeof[$a["anime"]["show_type"]]++;
+					
+					if($a["rating"]["value"] == ""){
+						$animeRating["-"]["anime"]++;
+						$animeRating["-"]["episodes"] += $a["episodes_watched"];
+					} else {
+						$animeRating[$a["rating"]["value"]]["anime"]++;
+						$animeRating[$a["rating"]["value"]]["episodes"] += $a["episodes_watched"];
+					}
+					
+					$animeWatchd .= $a["anime"]["slug"].", ";
+					
+				}
+				
+				// Filter unprogressed data
+				unset($animeTypeof["music"]);
+				unset($animeTypeof[""]);
+				
+				$userInfo = $this->cacheData($userData, $animeWatchd, $animeAmount, $animeRating, $animeTypeof);
+				$userStatistics =  "{\"state\": \"4\", \"error\": \"\", \"data\": ".$userInfo."}";
+			}
+			
+			return $userStatistics;
+		}
+		
+		
+		/**
+		 * Create or update a cache file
+		 *
+		 * This function allows to create a new cache file
+		 * or edit an existing file to cache an user's data.
+		 */
+		protected function cacheData($userData, $animeWatchd, $animeAmount, $animeRating, $animeTypeof){
+		
+			$userExis = $this->db->query("SELECT `id` FROM `hb_user` WHERE `name` = '".$this->user."'");
+			
+			// Please forgive me the sin of storing json in a sql-db
+			$inpQuery = "
+				`name` = '".$this->user."',
+				`hbname` = '".$userData['username']."',
+				`avatar` = '".$userData['useravat']."',
+				`animetime` = '".$userData['usertime']."',
+				`animelist` = '".$animeWatchd."',
+				`animeallocation` = '".json_encode($animeAmount)."',
+				`animeratings` = '".json_encode($animeRating)."',
+				`animetypes` = '".json_encode($animeTypeof)."',
+				`lastupdated` = '".time()."'
+			";
+			
+			if($userExis->num_rows === 1){
+				$this->db->query("UPDATE `hb_user` SET ".$inpQuery." WHERE `name` = '".$this->user."'");
+			} else {
+				$this->db->query("INSERT INTO `hb_user` SET ".$inpQuery);
+			}
+
+			$userData = array(
+				"name" => $this->user,
+				"hbname" => $userData['username'],
+				"avatar" => $userData['useravat'],
+				"animetime" => $userData['usertime'],
+				"animelist" => $animeWatchd,
+				"animeallocation" => $animeAmount,
+				"animeratings" => $animeRating,
+				"animetypes" => $animeTypeof,
+				"lastupdated" => time()
+			);
+			
+			return json_encode($userData);
+			
+		}
+		
+		
+		/**
+		 * Check the site cache for an existing list
+		 *
+		 * Check the cache directory for an existing file
+		 * with the respective user's name to load data
+		 * from cache instead of using the hb mashape API
+		 */
+		protected function checkCache(){
+			
+			$userData = $this->db->query("SELECT `lastupdated` FROM `hb_user` WHERE `name` = '".$this->user."'");
+			
+			if($userData->num_rows === 1){
+				$userInfo = $userData->fetch_assoc();
+				return ((time() - 259200) > $userInfo['lastupdated']) ? false : true;
+			}
+			
+			return false;
+		}
+		
+		
+		/**
+		 * Load data from cached user file
+		 *
+		 * Load the hummingboard data from a cached user
+		 * file if the checkCache function hasn't found an
+		 * version younger than the defined $cacheTime
+		 */
+		protected function getCache(){
+		
+			$userData = $this->db->query("SELECT * FROM `hb_user` WHERE `name` = '".$this->user."'");
+			$userInfo = $userData->fetch_assoc();
+			
+			$userInfo['animeallocation'] = json_decode($userInfo['animeallocation']);
+			$userInfo['animeratings'] = json_decode($userInfo['animeratings']);
+			$userInfo['animetypes'] = json_decode($userInfo['animetypes']);
+			
+			return "{\"state\": \"4\", \"error\": \"\", \"data\": ".json_encode($userInfo)."}";
+		
+		}
+		
 		
 		/**
 		 * Output an error

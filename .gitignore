@@ -10,7 +10,7 @@ sig/img/*.png
 
 # Config #
 src/core/config.php
-sig/lib/config.php
+hboard-sig/lib/config.php
 
 # Remote Sync config #
 sftp-config.json

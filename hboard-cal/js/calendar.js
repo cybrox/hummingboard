@@ -50,17 +50,24 @@ function handleCalendar(){
 
 	$("td, a").unbind("click"); // Hack Datepicker to a normal calendar
 
-	$.getJSON("api.php?user="+$("#user").attr("name"), function(json){
-		if(json.success){
-			var schedulecount = json.dataset.length;
-			while(schedulecount--){
-				var schedule = json.dataset[schedulecount];
-				$("#"+schedule['sdate']).append("<div class=\"schedule\"><strong>"+schedule['title']+"</strong><br />Episode "+schedule['episd']+"</div>");
+	var userName = $("#user").attr("name");
+	if(userName != ""){
+		$.getJSON("api.php?user="+userName, function(json){
+			if(json.success){
+				var schedulecount = json.dataset.length;
+				while(schedulecount--){
+					var schedule = json.dataset[schedulecount];
+					$("#"+schedule['sdate']).append("<div class=\"schedule\"><strong>"+schedule['title']+"</strong><br />Episode "+schedule['episd']+"</div>");
+				}
+			} else {
+				$("#error").show();
+				$("#errorName").text(userName);
 			}
-		} else {
-			$("#error").show();
-		}
-	});
+		});
+	} else {
+		$("#error").show();
+		$("#errorName").text(userName);
+	}
 }
 
 

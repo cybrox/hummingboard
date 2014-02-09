@@ -3,7 +3,6 @@
 	/* Get parameters from the requested URL */
 	$requestedLink = explode("/", $_SERVER["REQUEST_URI"]);
 	$requestedUser = (empty($requestedLink[1])) ? "" : $requestedLink[1];
-	$requestedUser = "cybrox"; // DEVTEMP
 
 ?>
 <!DOCTYPE html>
@@ -34,6 +33,7 @@
 	<div id="error">
 		<h1>Something went terribly wrong!</h1>
 		<span><br />
+			Your requested the user "<span id="errorName"></span>".<br /><br />
 			Have you entered a valid username?<br />
 			Have you made sure that there are no typos?<br />
 			Are you REALLY! sure that there are no typos?<br />
