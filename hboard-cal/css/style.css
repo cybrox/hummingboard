@@ -1,0 +1,177 @@
+/**
+ * Hummingboard Calender
+ * 'cause I want to know how long I need to wait for my animu
+ *
+ * Written and copyrighted 2014+
+ * by Sven Marc 'CybroX' Gehring
+ *
+ * Licensed under CC BY-SA 3.0
+ * For additional informations, please read the
+ * LICENSE.md file or the license deed at the
+ * Creative Commons website.
+ */
+
+a { color: #ec8661; }
+* { font-family: Tahoma; }
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #525a65;
+}
+
+header {
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	background: #2f343b;
+	border-bottom: 1px solid #222;
+	/*z-index: 200;*/
+}
+
+#title {
+	height: 60px;
+	margin: 0;
+	padding: 0 0 0 5%;
+	line-height: 60px;
+	font-size: 1.3em;
+	font-weight: normal;
+	color: #ccc;
+}
+
+#error {
+	display: none;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #525a65;
+	text-align: center;
+	z-index: 100;
+}
+
+#error h1 {
+	margin: 0;
+	padding-top: 100px;
+	color: #fff;
+	text-align: center;
+}
+
+#error span {
+	color: #fff;
+}
+
+#calendar {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+
+.chessed { background: rgba(255,255,255,0.02); }
+
+.schedule strong { color: #fff; }
+.schedule {
+	margin: 3px 0;
+	padding: 3px 10px;
+	background: #EE6A50;
+	font-size: 0.8em;
+}
+
+.ui-datepicker,
+.ui-datepicker table,
+.ui-datepicker tr,
+.ui-datepicker td,
+.ui-datepicker th {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-spacing: 0;
+}
+
+.ui-datepicker {
+    width: 100%;
+    height: 100%;
+}
+
+.ui-datepicker-header {
+    position: relative;
+    padding-right: 5%;
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.3em;
+}
+ 
+.ui-datepicker-title {
+	text-align: right;
+	color: #ccc;
+}
+ 
+
+ 
+.ui-datepicker-month:before {
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    content: '';
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+    position: absolute;
+    top: -2px;
+    padding: 5px;
+    cursor: pointer;
+}
+ 
+.ui-datepicker-prev {
+    left: 0;
+    padding-left: 0;
+}
+ 
+.ui-datepicker-next {
+    right: 0;
+    padding-right: 0;
+}
+ 
+.ui-datepicker-prev span,
+.ui-datepicker-next span{
+    display: block;
+    width: 5px;
+    height: 10px;
+    text-indent: -9999px;
+ 
+}
+
+.ui-datepicker-calendar { width: 100%; }
+.ui-datepicker-calendar th {
+	padding: 10px 0;
+    text-align: center;
+    font-weight: normal;
+    font-size: 1.2em;
+    color: #ddd;
+    background: #222;
+}
+
+.ui-datepicker-calendar td {
+	width: 14%;
+    padding: 0 7px;
+    vertical-align: top;
+    overflow: auto;
+}
+ 
+.ui-datepicker-calendar
+.ui-state-default {
+    display: block;
+    outline: none;
+ 
+    text-decoration: none;
+    color: #fff;
+ 
+    border: 1px solid transparent;
+}
+ 
+.ui-datepicker-current-day { background: #ec8661 }
+
+.ui-datepicker-other-month .ui-state-default { color: #999; }

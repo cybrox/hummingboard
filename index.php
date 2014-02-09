@@ -1,30 +1,39 @@
 <?php
-	
-	set_time_limit(0);
-	
-	require_once('./src/core/config.php');
-	
-	$requestUrl = explode("/", $_SERVER["REQUEST_URI"]);
-		
-	$nameUrlP = 1;
-	$userName = (empty($requestUrl[$nameUrlP])) ? "" : $requestUrl[$nameUrlP];
+
+	$requestedUrl = explode("/", $_SERVER["REQUEST_URI"]);
+	$requestedUsr = (empty($requestedUrl[1])) ? "" : $requestUrl[1];
+
+	require_once('./src/core/config.php');				// Hummingbird API configuration
+	require_once('./src/core/hummingboard.class.php');	// Hummingbird API cURL handle class
+	require_once('./src/core/lib/Unirest.php');			// Hummingbird API cURL request library
+
+	$hummingboard = new Hummingboard;
+	$humminguser  = $hummingboard->readUserData($requestedUsr);
+	$hummingtitle = $humminguser['username'];
+	$loadProfile  = true;
+
+	if($humminguser == false){
+		$loadProfile = false;
+		$hummingtitle = "Home";
+	}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
 	
-	<meta name="author" content="CybroX" />
-	<meta name="copyright" content="2013" CybroX" />
+	<meta name="author" content="cybrox" />
+	<meta name="copyright" content="2013 - 2014 cybrox" />
 
 	<link type="image/x-icon" href="<?php echo DIRURL; ?>src/img/favicon.ico" rel="shortcut icon"  />
-	<link type="image/x-icon" href="<?php echo DIRURL; ?>http://cybrox.eu/src/img/favicon.ico" rel="icon" type="image/x-icon" />
+	<link type="image/x-icon" href="<?php echo DIRURL; ?>src/img/favicon.ico" rel="icon" type="image/x-icon" />
 	
 	<link href="<?php echo DIRURL; ?>src/css/style.css" rel="stylesheet" />
 	
-	<title>Home ~ Hummingboard</title>
+	<title><?php echo $hummingtitle; ?> ~ Hummingboard</title>
 </head>
 <body>
 
