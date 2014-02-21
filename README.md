@@ -1,3 +1,8 @@
+**Important Note:** At first, Hummingboard was just a very simple statistics tool. However, I've added a few other things over time and it got really messy so I just decided to redo the whole thing and build it upon a new core. The new Hummingboard will be a easy-to-use collection of all the old Hummingboard Tools wrapped up in an ember application.  
+You can already download the indev version from the *master-v2* branch if you want to check it out but nothing of that is defined to stay by now.
+Speaking of branches, I'll also try to start using real branching in this project. The first version was just all-in-one because it wasn't really big enough to be worth the work but it eventually grow pretty big to manage it like that.
+
+
 # Hummingboard
 
 Hummingboard is a collection of small goodies such as additional statistics or signature images for hummingbird.me users.
