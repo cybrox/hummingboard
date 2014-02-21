@@ -1,0 +1,71 @@
+/**
+ * Hummingboard - Hummingbird tools
+ *
+ * Written and copyrighted 2014+
+ * by Sven Marc 'cybrox' Gehring
+ *
+ * Licensed under CC BY-SA
+ */
+
+#statistics {
+	height: 700px;
+}
+
+#statisticsLibrary,
+#statisticsGenres {
+	width: 100%;
+	height: 45%;
+}
+
+#statisticsLibrary {
+	-webkit-box-shadow: 0 1px 0 #666;
+	   -moz-box-shadow: 0 1px 0 #666;
+	        box-shadow: 0 1px 0 #666;
+}
+
+#statisticsLabels {
+	width: 100%;
+	height: 10%;
+	-webkit-box-shadow: 0 1px 0 #666;
+	   -moz-box-shadow: 0 1px 0 #666;
+	        box-shadow: 0 1px 0 #666;
+}
+
+#statsLibraryStates  { width: 30%; }
+#statsLibraryRatings { width: 50%; }
+#statsLibraryTypes   { width: 20%; }
+#statsLibraryStates,
+#statsLibraryRatings,
+#statsLibraryTypes {
+	height: 100%;
+	float: left;
+}
+
+.statisticsTitle {
+	height: 20%;
+	margin-top: 1px;
+}
+
+.statisticsTitle h2 {
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+
+
+/*
+** Graph plugin styles
+*/
+.graph {
+	width: 80%;
+	height: 80%;
+	margin: 0 10%;
+	position: relative;
+}
+
+.graphDes { font-size: 0.80em; }
+.graphVal { font-size: 0.75em; }
+
+.orangeBar { background: #CD661D; }
+.blueBar   { background: #1874CD; }

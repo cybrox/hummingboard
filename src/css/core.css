@@ -1,0 +1,258 @@
+/**
+ * Hummingboard - Hummingbird tools
+ *
+ * Written and copyrighted 2014+
+ * by Sven Marc 'cybrox' Gehring
+ *
+ * Licensed under CC BY-SA
+ */
+
+* {
+	font-family: Tahoma;
+	color: #efefef;
+}
+
+a.nohover:hover { color: #ec8661; }
+
+a:hover,
+a:hover i { color: #FF4500; }
+
+a,
+a i {
+	color: #ec8661;
+	text-decoration: none;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #1e232a;
+}
+
+header:after { clear: left; }
+header {
+	width: 90%;
+	height: 60px;
+	margin: 0;
+	padding: 0 5%;
+	background: #2f343b;
+	border-bottom: 1px solid #111;
+}
+
+footer:after { clear: left; }
+footer {
+	margin: 0;
+	padding: 10px 5%;
+	background: #1e232a;
+	border-top: 1px solid #111;
+}
+
+#content {
+	margin: 0;
+	padding: 50px 5%;
+	font-size: 1.1em;
+	background: #525a65;
+}
+
+
+/*
+** Header
+*/
+#sitetitle,
+#sitenav {
+	width: 50%;
+	float: left;
+}
+
+#sitetitle a { color: #e4e4e4; }
+#sitetitle {
+	margin: 0;
+	padding: 0;
+	color: #e4e4e4;
+	font-size: 1.4em;
+	font-weight: normal;
+	line-height: 60px;
+}
+
+#sitetitle span {
+	font-size: 0.7em;
+}
+
+#sitenav {
+	text-align: right;
+	line-height: 60px;
+	color: #666;
+}
+
+#sitenav a:last-of-type { padding-right: 0; }
+#sitenav a.active,
+#sitenav a.active i { color: #EECBAD; }
+#sitenav a {
+	display: inline-block;
+	height: 60px;
+	padding: 0 15px;
+}
+
+
+
+/*
+** Content specific
+*/
+#welcomeText {
+	padding: 20px;
+	background: rgba(255,255,255,0.04);
+	height: 150px;
+	margin: 0;
+}
+
+#logoimg {
+	float: right;
+	width: 150px;
+	margin: 0 0 50px 50px;
+}
+
+#getstarted {
+	margin: 80px 0 130px 0;
+	padding: 40px 0;
+	font-size: 2em;
+	color: #999;
+	text-align: center;
+}
+
+#getstarted input {
+	font-size: 1em;
+	color: #aaa;
+	background: none;
+	outline: none !important;
+	border: none;
+	border-bottom: 1px dotted #ddd !important;
+}
+
+#getstarted button {
+	padding: 5px 10px;
+	background: none;
+	border: none;
+	color: #aaa;
+	font-size: 1em;
+	outline: none !important;
+	border-bottom: 1px solid #333;
+	border-right: 1px solid #333;
+	-webkit-border-radius: 5px;
+	   -moz-border-radius: 5px;
+	        border-radius: 5px;
+}
+
+#getstarted button:hover {
+	cursor: pointer;
+	background: #333;
+}
+
+.feature:hover { background: rgba(255,255,255,0.3); }
+.feature {
+	width: 100%;
+	height: auto;
+	background: rgba(255,255,255,0.4);
+	-webkit-border-radius: 3px;
+	   -moz-border-radius: 3px;
+	        border-radius: 3px;
+}
+
+.featureicon {
+	display: block;
+	float: left;
+	margin: 0 10px 10px 0;
+	font-size: 3em;
+	color: #525a65;
+}
+
+.featuretitle {
+	display: block;
+	margin: 10px 0 15px 0;
+	font-size: 2em;
+}
+
+
+
+/*
+** Framework components
+*/
+.half,
+.third,
+.quarter {
+	float: left;
+}
+
+.half { width: 48%; }
+.third { width: 30%; }
+.quarter { width: 22%; }
+.half:nth-of-type(2) { margin-left: 4%; }
+.third:nth-of-type(2) { margin: 0 5%; }
+.quarter:nth-of-type(2),
+.quarter:nth-of-type(3) { margin: 0 3%; }
+
+
+.clear { clear: both; }
+.wot { text-align: justify; }
+.inbox { padding: 20px; }
+.nobox { margin: 0; }
+
+.spacer100,
+.spacer300 {
+	width: 100%;
+	content: ' ';
+}
+
+.spacer100 { height: 100px; }
+.spacer300 { height: 300px; }
+
+.noscript {
+	color: #FF6347;
+	text-align: center;
+}
+
+
+/*
+** Footer
+*/
+#footerAbouts,
+#footerAuthor {
+	display: block;
+	float: left;
+	width: 50%;
+	color: #666;
+	font-size: 0.8em;
+}
+#footerAuthor { text-align: right; }
+#footerAuthor i { color: #666; }
+
+#footerAbouts i:first-of-type { padding-left: 0; }
+#footerAbouts i {
+	display: inline-block;
+	padding-left: 6px;
+	color: #666;
+}
+
+#footerAbouts a {
+	display: inline-block;
+	padding-right: 6px;
+}
+
+
+
+/*
+** Transitions and animations
+*/
+.feature,
+.feature:hover,
+#getstarted button,
+#getstarted button:hover {
+	-webkit-transition: background 0.3s ease-in-out;
+	   -moz-transition: background 0.3s ease-in-out;
+	        transition: background 0.3s ease-in-out;
+}
+
+a, a i, a:hover, a:hover i {
+	-webkit-transition: color 0.3s ease-in-out;
+	   -moz-transition: color 0.3s ease-in-out;
+	        transition: color 0.3s ease-in-out;
+}
