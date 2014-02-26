@@ -8,7 +8,13 @@
  */
 
 var config = {
-	apiurl: ""
+	api: {
+		proxyurl: "./src/api/",
+		reqlink:  "",
+		request: function(apiurl){
+			config.api.request = config.api.proxyurl+apiurl;
+		}
+	}
 }
 
 
@@ -33,7 +39,7 @@ HB.Router.map(function(){
 
 
 /**********************************************************
- * Hummginboard Controllers
+ * Hummingboard Controllers
  */
 HB.ApplicationController = Ember.Controller.extend({
 	pageName: function(){
@@ -44,6 +50,8 @@ HB.ApplicationController = Ember.Controller.extend({
 		return (pageName == "") ? "" : " - " + pageName;
 	}.property("currentPath"),
 
+	userAvat: "",
+	userCovr: "",
 	userName: "",
 	userIsOn: false,
 	userIsOk: false,
@@ -81,7 +89,7 @@ HB.ApplicationController = Ember.Controller.extend({
 				userName = $.cookie('_hboard-user');
 			}
 		} else {
-			userName = bodyName
+			userName = bodyName;
 		}
 
 		this.set("userName", this.userName);
@@ -98,7 +106,7 @@ HB.ApplicationController = Ember.Controller.extend({
 
 
 HB.IndexController = Ember.Controller.extend({
-	needs: ["application"],
+	needs: ["application", "index"],
 
 	userName: "",
 	userIsOn: false,
@@ -106,16 +114,27 @@ HB.IndexController = Ember.Controller.extend({
 
 	actions: {
 		defineUser: function(){
+			var self = this;
 			if(this.userName == "") return false;
 
-			this.set("controllers.application.userName", this.userName);
-			this.set("controllers.application.userIsOn", true);
-
+			config.api.request("users/"+this.userName);
+			
 			$.cookie('_hboard-user', this.userName);
-			// $.getJSON("", function(json){
-
-			// });
-			this.set("userIsOn", true)
+			$.getJSON(config.api.reqlink, function(json){
+				if(json.success === false){
+					self.set("controllers.index.userIsOn", true);
+				} else {
+					/* DEVNOTE wrap this together */
+					self.set("controllers.application.userName", this.userName);
+					self.set("controllers.application.userAvat", json.avatar);
+					self.set("controllers.application.userCovr", json.cover_image);
+					/* DEVNOTE replace with comp. props */
+					self.set("controllers.application.userIsOn", true);
+					self.set("controllers.application.userIsOk", true);
+					self.set("controllers.index.userIsOn", true);
+					self.set("controllers.index.userIsOk", true);
+				}
+			});
 		}
 	}
 });

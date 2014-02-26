@@ -12,5 +12,6 @@ sig/img/*.png
 src/core/config.php
 hboard-sig/lib/config.php
 
-# Remote Sync config #
+# Remote Sync + config #
 sftp-config.json
+src/api/config.php
