@@ -100,18 +100,18 @@
 						<span>Using Hummingboard as</span>
 						{{input type="text" value=userName placeholder=userName}}
 						<span> &bull; </span>
-						<button {{action 'defineUser'}}>Change user!</button>
+						<button {{action 'defineUser'}}>{{#if defUsr}}loading...{{else}}Change user!{{/if}}</button>
 					{{else}}
 						<span>There is no Hummingbird user called</span>
 						{{input type="text" value=userName placeholder="... damn troll!"}}
 						<span> &bull; </span>
-						<button {{action 'defineUser'}}>Try again!</button>
+						<button {{action 'defineUser'}}>{{#if defUsr}}loading...{{else}}Try again!{{/if}}</button>
 					{{/if}}
 				{{else}}
-					<span>Just enter your Hummingbird</span>
-					{{input type="text" value=userName placeholder="Username"}}
+					<span>Just enter your Hummingbird Username</span>
+					{{input type="text" value=userName placeholder="right here"}}
 					<span> to </span>
-					<button {{action 'defineUser'}}>get started!</button>
+					<button {{action 'defineUser'}}>{{#if defUsr}}loading...{{else}}get started!{{/if}}</button>
 				{{/if}}
 			</section>
 			<section id="features">

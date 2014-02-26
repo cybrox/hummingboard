@@ -12,7 +12,7 @@ var config = {
 		proxyurl: "./src/api/",
 		reqlink:  "",
 		request: function(apiurl){
-			config.api.request = config.api.proxyurl+apiurl;
+			config.api.reqlink = config.api.proxyurl+apiurl;
 		}
 	}
 }
@@ -108,9 +108,14 @@ HB.ApplicationController = Ember.Controller.extend({
 HB.IndexController = Ember.Controller.extend({
 	needs: ["application", "index"],
 
+	defUsr: false,
 	userName: "",
-	userIsOn: false,
-	userIsOk: false,
+	userIsOn: function(){
+		return this.get("controllers.application.userIsOn");
+	}.property("controllers.application.userIsOn"),
+	userIsOk: function(){
+		return this.get("controllers.application.userIsOk");
+	}.property("controllers.application.userIsOk"),
 
 	actions: {
 		defineUser: function(){
@@ -118,21 +123,24 @@ HB.IndexController = Ember.Controller.extend({
 			if(this.userName == "") return false;
 
 			config.api.request("users/"+this.userName);
-			
+			self.set("defUsr", true);
+
 			$.cookie('_hboard-user', this.userName);
 			$.getJSON(config.api.reqlink, function(json){
+				self.set("defUsr", false);
 				if(json.success === false){
-					self.set("controllers.index.userIsOn", true);
+					self.setProperties({
+						"controllers.application.userIsOn": true,
+						"controllers.application.userIsOk": false
+					});
 				} else {
-					/* DEVNOTE wrap this together */
-					self.set("controllers.application.userName", this.userName);
-					self.set("controllers.application.userAvat", json.avatar);
-					self.set("controllers.application.userCovr", json.cover_image);
-					/* DEVNOTE replace with comp. props */
-					self.set("controllers.application.userIsOn", true);
-					self.set("controllers.application.userIsOk", true);
-					self.set("controllers.index.userIsOn", true);
-					self.set("controllers.index.userIsOk", true);
+					self.setProperties({
+						"controllers.application.userName": this.userName,
+						"controllers.application.userAvat": json.avatar,
+						"controllers.application.userCovr": json.cover_image,
+						"controllers.application.userIsOn": true,
+						"controllers.application.userIsOk": true
+					});
 				}
 			});
 		}
@@ -151,19 +159,6 @@ HB.StatisticsController = Ember.Controller.extend({
 /**********************************************************
  * Hummingboard Classes
  */
-HB.User = Ember.Object.extend({
-	isValid: false,
-	avatar: "",
-	cover: "",
-	name: "",
-
-	requestUser: function(username){
-		return $.getJSON("").then(function(json){
-
-		});
-	}
-});
-
 HB.Library = Ember.Object.extend({
 
 });
