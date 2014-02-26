@@ -50,12 +50,18 @@ HB.ApplicationController = Ember.Controller.extend({
 		return (pageName == "") ? "" : " - " + pageName;
 	}.property("currentPath"),
 
+	pageSize: 0,
 	userAvat: "",
 	userCovr: "",
 	userName: "",
 	userIsOn: false,
 	userIsOk: false,
-	pageSize: 0,
+	userTime: function(){
+
+	}.property();
+	userLink: function(){
+		return "http://hummingbird.me/users/"+this.userName;
+	}.property("userName"),
 
 	/**
 	 * Overwrite Controller init method
@@ -134,8 +140,9 @@ HB.IndexController = Ember.Controller.extend({
 						"controllers.application.userIsOk": false
 					});
 				} else {
+					console.log(json)
 					self.setProperties({
-						"controllers.application.userName": this.userName,
+						"controllers.application.userName": json.name,
 						"controllers.application.userAvat": json.avatar,
 						"controllers.application.userCovr": json.cover_image,
 						"controllers.application.userIsOn": true,

@@ -47,6 +47,20 @@
 			</nav>
 		</header>
 
+		{{#if userIsOk}}
+			<section id="userPanel">
+				<img id="userAvatar" {{bind-attr src=userAvat}} />
+				<span id="userName">
+					{{userName}}
+					<sub><a {{bind-attr href=userLink}}><i class="fa fa-link"></i></a></sub>
+				</span>
+				<span id="userStat">
+					Lifetime spent watching ...<br />
+					{{userTime}}
+				</span>
+			</section>
+		{{/if}}
+
 		<section id="content">{{outlet}}</section>
 
 		<footer>

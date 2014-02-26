@@ -94,6 +94,27 @@ footer {
 }
 
 
+#userPanel {
+	width: 90%;
+	height: 80px;
+	padding: 10px 5%;
+	vertical-align: middle;
+}
+
+#userAvatar {
+	width: 80px;
+	height: 80px;
+	margin-right: 30px;
+}
+
+#userName sub { font-size: 0.4em; }
+#userName {
+	font-size: 3em;
+	line-height: 80px;
+	vertical-align: top;
+}
+
+
 
 /*
 ** Content specific
@@ -255,4 +276,11 @@ a, a i, a:hover, a:hover i {
 	-webkit-transition: color 0.3s ease-in-out;
 	   -moz-transition: color 0.3s ease-in-out;
 	        transition: color 0.3s ease-in-out;
+}
+
+#userCover,
+#userCover:hover {
+	-webkit-transition: opacity 0.3s ease-in-out;
+	   -moz-transition: opacity 0.3s ease-in-out;
+	        transition: opacity 0.3s ease-in-out;
 }
