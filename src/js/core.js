@@ -93,8 +93,7 @@ HB.ApplicationController = Ember.Controller.extend({
 			userName = bodyName;
 		}
 
-		this.set("userName", this.userName);
-		this.set("userIsOn", this.userIsOn);
+		this.set("user", HB.User.create({"username": userName}));
 	},
 
 	readPage: function(){
@@ -139,6 +138,37 @@ HB.StatisticsController = Ember.Controller.extend({
 	needs: ["application"]
 });
 
+
+HB.SigimgController = Ember.Controller.extend({
+	needs: ["application"],
+
+	usr: function(){
+		return this.get("controllers.application.user.name");
+	}.property("controllers.application.user.name"),
+
+	img: function(){
+		return "http://sig.hummingboard.me/"+this.get("usr");
+	}.property("usr"),
+	tfb: function(){
+		return "[img]"+this.get("img")+"[/img]";
+	}.property("usr"),
+	tfl: function(){
+		return "[url='http://hummingbird.me/users/"+this.get("usr")+"'][img]"+this.get("img")+"[/img][/url]";
+	}.property("usr"),
+	tfh: function(){
+		return "<a href='http://hummingbird.me/users/"+this.get("usr")+"'><img src='"+this.get("img")+"' /></a>";
+	}.property("usr")
+});
+
+
+
+HB.SigimgView = Ember.View.extend({
+	didInsertElement: function(){
+		$("input").click(function () {
+		   $(this).select();
+		});
+	}
+});
 
 
 

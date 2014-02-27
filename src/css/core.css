@@ -140,7 +140,7 @@ footer {
 	text-align: center;
 }
 
-#getstarted input {
+/*#getstarted*/ input {
 	font-size: 1em;
 	color: #aaa;
 	background: none;
@@ -149,7 +149,7 @@ footer {
 	border-bottom: 1px dotted #ddd !important;
 }
 
-#getstarted button {
+/*#getstarted*/ button {
 	padding: 5px 10px;
 	background: none;
 	border: none;
@@ -191,6 +191,9 @@ footer {
 	margin: 10px 0 15px 0;
 	font-size: 2em;
 }
+
+#signatureImage input { width: 100%; }
+#signatureImage img { width: 80%; }
 
 
 
