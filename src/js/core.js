@@ -50,18 +50,13 @@ HB.ApplicationController = Ember.Controller.extend({
 		return (pageName == "") ? "" : " - " + pageName;
 	}.property("currentPath"),
 
-	pageSize: 0,
-	userAvat: "",
-	userCovr: "",
-	userName: "",
-	userIsOn: false,
-	userIsOk: false,
-	userTime: function(){
+	createUser: function(username){
+		this.set("user", HB.User.create(username));
+	},
 
-	}.property();
-	userLink: function(){
-		return "http://hummingbird.me/users/"+this.userName;
-	}.property("userName"),
+	pageSize: 0,
+	user: null,
+
 
 	/**
 	 * Overwrite Controller init method
@@ -114,42 +109,27 @@ HB.ApplicationController = Ember.Controller.extend({
 HB.IndexController = Ember.Controller.extend({
 	needs: ["application", "index"],
 
-	defUsr: false,
 	userName: "",
+	userLoad: function(){
+		return this.get("controllers.application.user.load");
+	}.property("controllers.application.user.load"),
 	userIsOn: function(){
-		return this.get("controllers.application.userIsOn");
-	}.property("controllers.application.userIsOn"),
+		return this.get("controllers.application.user.isOn");
+	}.property("controllers.application.user.isOn"),
 	userIsOk: function(){
-		return this.get("controllers.application.userIsOk");
-	}.property("controllers.application.userIsOk"),
+		return this.get("controllers.application.user.isOk");
+	}.property("controllers.application.user.isOk"),
 
 	actions: {
 		defineUser: function(){
-			var self = this;
 			if(this.userName == "") return false;
-
-			config.api.request("users/"+this.userName);
-			self.set("defUsr", true);
-
-			$.cookie('_hboard-user', this.userName);
-			$.getJSON(config.api.reqlink, function(json){
-				self.set("defUsr", false);
-				if(json.success === false){
-					self.setProperties({
-						"controllers.application.userIsOn": true,
-						"controllers.application.userIsOk": false
-					});
-				} else {
-					console.log(json)
-					self.setProperties({
-						"controllers.application.userName": json.name,
-						"controllers.application.userAvat": json.avatar,
-						"controllers.application.userCovr": json.cover_image,
-						"controllers.application.userIsOn": true,
-						"controllers.application.userIsOk": true
-					});
-				}
-			});
+			if(this.get("controllers.application.user") == null){
+				this.set("controllers.application.user", HB.User.create({
+					"username": this.userName
+				}));
+			} else {
+				this.get("controllers.application.user").request(this.userName);
+			}
 		}
 	}
 });
@@ -166,6 +146,69 @@ HB.StatisticsController = Ember.Controller.extend({
 /**********************************************************
  * Hummingboard Classes
  */
+HB.User = Ember.Object.extend({
+	needs: ["index"],
+
+	isOk: false,
+	isOn: false,
+	load: false,
+	name: "",
+	imga: "",
+	imgc: "",
+	time: "",
+	link: function(){
+		return "http://hummingbird.me/users/"+this.name;
+	}.property("userName"),
+
+
+	init: function(){
+		this.request(this.get("username"));
+		this._super();
+	},
+
+	request: function(username){
+		self = this;
+		self.set("name", username);
+		self.set("load", true);
+
+		config.api.request("users/"+this.name);
+
+		$.cookie('_hboard-user', this.name);
+		$.getJSON(config.api.reqlink, function(json){
+			self.set("load", false);
+			if(json.success === false){
+				self.setProperties({
+					"isOn": true,
+					"isOk": false
+				});
+			} else {
+				self.generateTimeString(json.life_spent_on_anime);
+				self.setProperties({
+					"name": json.name,
+					"imga": json.avatar,
+					"imgc": json.cover_image,
+					"isOn": true,
+					"isOk": true
+				});
+			}
+		});
+	},
+
+	generateTimeString: function(wt){
+		yr = Math.floor(wt / 525948.766);
+		lf = wt % 525948.766;
+		mh = Math.floor(lf / 43829.766);
+		lf = lf % 43829.0639;
+		dy = Math.floor(lf / 1440);
+		lf = lf % 1440;
+		hr = Math.floor(lf / 60);
+		mn = Math.floor(lf % 60);
+
+		this.set("time", yr+" Years, "+mn+" Months, "+dy+" Days, "+hr+" Hours, "+mn+" Minutes");
+	}
+});
+
+
 HB.Library = Ember.Object.extend({
 
 });

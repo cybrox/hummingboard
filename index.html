@@ -36,27 +36,27 @@
 				{{#link-to 'index'}}Hummingb<u>oa</u>rd{{/link-to}}
 				<span>{{pageName}}</span></h1>
 			<nav id="sitenav">
-				{{#if userIsOn}}
-					{{#link-to 'statistics' classNames="userlink"}}   <i class="fa fa-signal"></i>    {{/link-to}}
-					{{#link-to 'calendar' classNames="userlink"}}     <i class="fa fa-calendar"></i>  {{/link-to}}
+				{{#if user.isOn}}
+					{{#link-to 'statistics'   classNames="userlink"}} <i class="fa fa-signal"></i>    {{/link-to}}
+					{{#link-to 'calendar'     classNames="userlink"}} <i class="fa fa-calendar"></i>  {{/link-to}}
 					{{#link-to 'achievements' classNames="userlink"}} <i class="fa fa-trophy"></i>    {{/link-to}}
-					{{#link-to 'sigimg' classNames="userlink"}}       <i class="fa fa-picture-o"></i> {{/link-to}}
+					{{#link-to 'sigimg'       classNames="userlink"}} <i class="fa fa-picture-o"></i> {{/link-to}}
 					&bull;
 				{{/if}}
 				{{#link-to 'index'}}Home{{/link-to}}
 			</nav>
 		</header>
 
-		{{#if userIsOk}}
+		{{#if user.isOk}}
 			<section id="userPanel">
-				<img id="userAvatar" {{bind-attr src=userAvat}} />
+				<img id="userAvatar" {{bind-attr src=user.imga}} />
 				<span id="userName">
-					{{userName}}
-					<sub><a {{bind-attr href=userLink}}><i class="fa fa-link"></i></a></sub>
+					{{user.name}}
+					<sub><a {{bind-attr href=user.link}}><i class="fa fa-link"></i></a></sub>
 				</span>
 				<span id="userStat">
 					Lifetime spent watching ...<br />
-					{{userTime}}
+					{{user.time}}
 				</span>
 			</section>
 		{{/if}}
@@ -114,18 +114,18 @@
 						<span>Using Hummingboard as</span>
 						{{input type="text" value=userName placeholder=userName}}
 						<span> &bull; </span>
-						<button {{action 'defineUser'}}>{{#if defUsr}}loading...{{else}}Change user!{{/if}}</button>
+						<button {{action 'defineUser'}}>{{#if userLoad}}loading...{{else}}Change user!{{/if}}</button>
 					{{else}}
 						<span>There is no Hummingbird user called</span>
 						{{input type="text" value=userName placeholder="... damn troll!"}}
 						<span> &bull; </span>
-						<button {{action 'defineUser'}}>{{#if defUsr}}loading...{{else}}Try again!{{/if}}</button>
+						<button {{action 'defineUser'}}>{{#if userLoad}}loading...{{else}}Try again!{{/if}}</button>
 					{{/if}}
 				{{else}}
 					<span>Just enter your Hummingbird Username</span>
 					{{input type="text" value=userName placeholder="right here"}}
 					<span> to </span>
-					<button {{action 'defineUser'}}>{{#if defUsr}}loading...{{else}}get started!{{/if}}</button>
+					<button {{action 'defineUser'}}>{{#if userLoad}}loading...{{else}}get started!{{/if}}</button>
 				{{/if}}
 			</section>
 			<section id="features">
