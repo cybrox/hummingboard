@@ -21,8 +21,8 @@
 	<title>Hummingboard</title>
 	
 </head>
-<!-- <body name="__undefined"> -->
-<body name="cybrox">
+<body name="__undefined">
+<!-- <body name="cybrox"> -->
 
 	<noscript>
 		<div class="spacer300"></div>
@@ -40,7 +40,7 @@
 				{{#if user.isOn}}
 					{{#link-to 'statistics'   classNames="userlink"}} <i class="fa fa-signal"></i>    {{/link-to}}
 					{{#link-to 'calendar'     classNames="userlink"}} <i class="fa fa-calendar"></i>  {{/link-to}}
-					{{#link-to 'achievements' classNames="userlink"}} <i class="fa fa-trophy"></i>    {{/link-to}}
+					<!--{{#link-to 'achievements' classNames="userlink"}} <i class="fa fa-trophy"></i>    {{/link-to}}-->
 					{{#link-to 'sigimg'       classNames="userlink"}} <i class="fa fa-picture-o"></i> {{/link-to}}
 					&bull;
 				{{/if}}
@@ -53,10 +53,10 @@
 				<img id="userAvatar" {{bind-attr src=user.imga}} />
 				<span id="userName">
 					{{user.name}}
-					<sub><a {{bind-attr href=user.link}}><i class="fa fa-link"></i></a></sub>
+					<u><a {{bind-attr href=user.link}}><i class="fa fa-link"></i></a></u>
 				</span>
 				<span id="userStat">
-					Lifetime spent watching ...<br />
+					Life spent watching anime<br />
 					{{user.time}}
 				</span>
 			</section>
@@ -159,6 +159,7 @@
 				</div>
 				<div class="clear"></div>
 			</section>
+			<!--
 			<div class="spacer100"></div>
 			<section id="features">
 				<div class="third feature">
@@ -190,6 +191,7 @@
 				</div>
 				<div class="clear"></div>
 			</section>
+			-->
 		</div>
 	</script>
 
@@ -215,13 +217,15 @@
 			</div>
 			<div class="half">
 				<label for="tfa">Raw image URL</label>
-				<input class="cnp" type="text" name="tfa" {{bind-attr value=tfa}} />
-				<label for="tfb">Embedded image (BB-Code)</label>
+				<input class="cnp" type="text" name="tfa" {{bind-attr value=img}} />
+				<label for="tfb"><br />BB-Code: Embedded image</label>
 				<input class="cnp" type="text" name="tfb" {{bind-attr value=tfb}} />
-				<label for="tfl">Embedded and linked image (BB-Code)</label>
+				<label for="tfl"><br />BB-Code: Embedded and linked image</label>
 				<input class="cnp" type="text" name="tfl" {{bind-attr value=tfl}} />
-				<label for="tfh">Embedded and linked image (HTML-Code)</label>
+				<label for="tfh"><br />HTML Code: Embedded image</label>
 				<input class="cnp" type="text" name="tfh" {{bind-attr value=tfh}} />
+				<label for="tfh"><br />HTML Code: Embedded and linked image</label>
+				<input class="cnp" type="text" name="tfh" {{bind-attr value=tfy}} />
 			</div>
 			<div class="clear"></div>
 		</section>

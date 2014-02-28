@@ -42,6 +42,11 @@ HB.Router.map(function(){
  * Hummingboard Controllers
  */
 HB.ApplicationController = Ember.Controller.extend({
+	needs: ["index"],
+
+	user: null,		// Will contain the main user object
+	libs: null,		// Will contain the main user library
+
 	pageName: function(){
 		var thisPath = this.get("currentPath");
 		var thisName = thisPath.replace("index", "");
@@ -50,12 +55,6 @@ HB.ApplicationController = Ember.Controller.extend({
 		return (pageName == "") ? "" : " - " + pageName;
 	}.property("currentPath"),
 
-	createUser: function(username){
-		this.set("user", HB.User.create(username));
-	},
-
-	pageSize: 0,
-	user: null,
 
 
 	/**
@@ -81,26 +80,23 @@ HB.ApplicationController = Ember.Controller.extend({
 		var userIsOn = true;
 
 		if(bodyName === "__undefined"){
+			/**
+			 * Will remove cookie support in later versions for URL rewrites
+			 */
 			if($.cookie('_hboard-user') === undefined){
 				userName = "";
 				userIsOn = false;
-
-				// this.transitionToRoute('index');
+				this.transitionToRoute('index');
 			} else {
 				userName = $.cookie('_hboard-user');
+				this.set("controllers.index.userName", userName);
 			}
 		} else {
 			userName = bodyName;
+			this.set("controllers.index.userName", userName);
 		}
 
 		this.set("user", HB.User.create({"username": userName}));
-	},
-
-	readPage: function(){
-		this.pageSize = window.innerHeight - 61 - 40;
-		window.onresize = function(){
-			this.pageSize = window.innerHeight - 61 - 40;
-		}
 	}
 });
 
@@ -121,7 +117,6 @@ HB.IndexController = Ember.Controller.extend({
 
 	actions: {
 		defineUser: function(){
-			if(this.userName == "") return false;
 			if(this.get("controllers.application.user") == null){
 				this.set("controllers.application.user", HB.User.create({
 					"username": this.userName
@@ -135,7 +130,14 @@ HB.IndexController = Ember.Controller.extend({
 
 
 HB.StatisticsController = Ember.Controller.extend({
-	needs: ["application"]
+	needs: ["application"],
+
+	init: function(){
+
+		alert(this.get("controllers.application.libs"));
+
+		this._super();
+	}
 });
 
 
@@ -156,6 +158,9 @@ HB.SigimgController = Ember.Controller.extend({
 		return "[url='http://hummingbird.me/users/"+this.get("usr")+"'][img]"+this.get("img")+"[/img][/url]";
 	}.property("usr"),
 	tfh: function(){
+		return "<img src='"+this.get("img")+"' />";
+	}.property("usr"),
+	tfy: function(){
 		return "<a href='http://hummingbird.me/users/"+this.get("usr")+"'><img src='"+this.get("img")+"' /></a>";
 	}.property("usr")
 });
@@ -197,6 +202,8 @@ HB.User = Ember.Object.extend({
 	},
 
 	request: function(username){
+		if(username == "") return;
+
 		self = this;
 		self.set("name", username);
 		self.set("load", true);
@@ -233,8 +240,15 @@ HB.User = Ember.Object.extend({
 		lf = lf % 1440;
 		hr = Math.floor(lf / 60);
 		mn = Math.floor(lf % 60);
+		ts = "";
 
-		this.set("time", yr+" Years, "+mn+" Months, "+dy+" Days, "+hr+" Hours, "+mn+" Minutes");
+		ts += (yr > 0) ? yr+" years, " : "";
+		ts += (mh > 0) ? mh+" months, " : "";
+		ts += (dy > 0) ? dy+" days, " : "";
+		ts += (hr > 0) ? hr+" hours, " : "";
+		ts += (mn > 0) ? mn+" minutes" : "";
+
+		this.set("time", ts);
 	}
 });
 

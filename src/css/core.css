@@ -107,11 +107,21 @@ footer {
 	margin-right: 30px;
 }
 
-#userName sub { font-size: 0.4em; }
 #userName {
 	font-size: 3em;
 	line-height: 80px;
 	vertical-align: top;
+}
+
+#userName u {
+	text-decoration: none;
+	font-size: 0.7em;
+	text-align: right;
+}
+
+#userStat {
+	display: inline-block;
+	float: right;
 }
 
 
@@ -192,8 +202,12 @@ footer {
 	font-size: 2em;
 }
 
+#signatureImage img { max-width: 80%; }
 #signatureImage input { width: 100%; }
-#signatureImage img { width: 80%; }
+#signatureImage label {
+	display: inline-block;
+	margin-top: 10px;
+}
 
 
 
