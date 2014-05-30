@@ -19,12 +19,12 @@
 	
 	<link href="css/style.css" rel="stylesheet" />
 	
-	<title><?php echo $requestedUser; ?>'s Hummingboard Caledar</title>
+	<title><?php echo $requestedUser; ?>'s Hummingboard Calendar</title>
 </head>
 <body>
 
 	<header>
-		<h1 id="title"><?php echo $requestedUser; ?>'s Hummingboard Caledar</h1>
+		<h1 id="title"><?php echo $requestedUser; ?>'s Hummingboard Calendar</h1>
 	</header>
 
 	<div id="user" name="<?php echo $requestedUser; ?>"></div>

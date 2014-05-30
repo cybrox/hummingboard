@@ -63,7 +63,7 @@ header {
 #calendar {
 	position: fixed;
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 }
 
 .chessed { background: rgba(255,255,255,0.02); }
@@ -93,7 +93,10 @@ header {
 }
 
 .ui-datepicker-header {
-    position: relative;
+    position: fixed;
+    width: 95%;
+    left: 0;
+    top: 0;
     padding-right: 5%;
     height: 60px;
     line-height: 60px;
@@ -144,7 +147,11 @@ header {
  
 }
 
-.ui-datepicker-calendar { width: 100%; }
+.ui-datepicker-calendar {
+    margin-top: 60px !important;
+    width: 100%;
+}
+
 .ui-datepicker-calendar th {
 	padding: 10px 0;
     text-align: center;
