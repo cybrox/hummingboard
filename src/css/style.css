@@ -105,6 +105,10 @@ body {
 	cursor: pointer;
 }
 
+#landingWhoops{
+	color: #949698;
+}
+
 #copyright {
 	display: inline-block;
 	width: 100%;
